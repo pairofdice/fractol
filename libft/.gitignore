@@ -1,0 +1,8 @@
+a.out
+a.exe
+*.swp
+*.o
+*.a
+*.gch
+*main.c
+
