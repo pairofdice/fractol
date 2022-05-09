@@ -6,14 +6,19 @@
 #    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/05/02 17:11:15 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/05/09 17:48:56 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 S = src/
 SRC = 	$Smain.c \
-		$Sinit.c
+		$Sinit.c \
+		$Sline.c \
+		$Sbounds_checks.c \
+		$Spixel_put_color.c \
+		$Scomplex.c \
+		$Smandelbrot.c
 
 #H = includes/
 HDR = fractol.h
@@ -26,7 +31,7 @@ LIBA = libft/libft.a
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 RM = /bin/rm -f
 
 all: $(NAME)

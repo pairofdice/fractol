@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/06 14:11:36 by jsaarine         ###   ########.fr       */
+/*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
+/*   Updated: 2022/05/09 18:18:51 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_context(t_context *ctx)
+int	mandelbrot(t_complex c)
 {
-	ctx->mlx = mlx_init();
-	ctx->fb.img = mlx_new_image(ctx->mlx, WIN_W, WIN_H);
-	ctx->fb.data = mlx_get_data_addr(ctx->fb.img, &ctx->fb.bits_per_pixel,
-			&ctx->fb.line_length, &ctx->fb.endian);
-	ctx->win = mlx_new_window(ctx->mlx, WIN_W, WIN_H, "Machine State");
-	printf("HELLO!\n");
-	ctx->frame_n = 0;
+	t_complex	z;
+	int	n;
+
+	n = 0;
+	z.x = 0;
+	z.y	= 0;
+
+
+	while ((z.x * z.x + z.y * z.y) < 4 && n < MAX_ITER)
+	{
+		z = cmplx_add(cmplx_mult(z, z), c);
+		n++;
+	}
+	return (n);
 }
