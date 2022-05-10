@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/09 18:11:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:26:27 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 enum {
 	WIN_W = 1536,
 	WIN_H = 1024,
-	MAX_ITER = 50,
+	MAX_ITER = 0,
 	
 };
 
@@ -87,10 +87,10 @@ int	points_in_window(t_line *l, t_context *ctx);
 void	img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 void	checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 
-t_complex	cmplx_add(t_complex a, t_complex b);
-t_complex	cmplx_sub(t_complex a, t_complex b);
-t_complex	cmplx_abs(t_complex a);
-t_complex	cmplx_mult(t_complex a, t_complex b);
+t_complex	c_add(t_complex a, t_complex b);
+t_complex	c_sub(t_complex a, t_complex b);
+t_complex	c_abs(t_complex a);
+t_complex	c_mult(t_complex a, t_complex b);
 
 int	rgb_to_int(t_point c);
 int	mandelbrot(t_complex c);

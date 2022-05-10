@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/09 18:20:20 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:29:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ void	colorslide(t_frame_buffer *fb)
 		x = 0;
 		while (x < WIN_W)
 		{
-			xc = (((float)x / (float)WIN_W) -1) * 2;
-			yc = (((float)y / (float)WIN_H ) -1) * 2;
+			xc = (((float)x / (float)WIN_W) * 2) -1;
+			yc = (((float)y / (float)WIN_H) * 2) -1;
 			c.x = xc;
 			c.y = -yc;
+
+			//printf("%.1f, %.1f ", c.x, c.y);
 			color = mandelbrot(c);
-			img_pixel_put(fb, x, y,
-				rgb_to_int((t_point){color * 5, color * 5, color * 5}));
+			//printf("%d ", color);
+			img_pixel_put(fb, x, y, rgb_to_int((t_point){color * 5, color * 5, color * 5}));
 			x++;
 		}
+		//printf("\n");
 		y++;
 	}
 }
@@ -71,17 +74,18 @@ int	draw_frame(t_context *ctx)
 	a.y = 0.01;
 	int i = 0;
 
+/* 
 	while (i < ctx->frame_n)
 	{
 		a = cmplx_mult(a, a);
 		i++;
 	}
-
+ */
 	line.b.x = WIN_H / 2 + a.x;
 	line.b.y = WIN_H / 2 + a.y;
 
 
-	draw_line(&line, ctx);	
+	//draw_line(&line, ctx);	
 	
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 	
@@ -93,20 +97,29 @@ int	draw_frame(t_context *ctx)
 int	main(/* int argc, char **argv */)
 {
 	t_context	ctx;
+	t_complex a;
+	t_complex b;
+	t_complex res;
+
+	a.x = 3;
+	a.y = 2;
+	b.x = 3;
+	b.y = 2;
+
+	res = c_mult(a, b);
+	printf("%f %f", res.x, res.y);
+
+
 	
 
 	init_context(&ctx);
-	colorslide(&ctx.fb);
-
-
-
-
 	// handle_args(argc, argv, &ctx);
 	//colorslide(&ctx.fb);
 	mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
-	mlx_put_image_to_window(ctx.mlx, ctx.win, ctx.fb.img, 0, 0);
+
 	// max_dimensions(&ctx);
 	// hook_em_up(&ctx);
+	colorslide(&ctx.fb);
 	mlx_loop(ctx.mlx);
 	return (0);
 }

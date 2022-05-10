@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/09 18:18:51 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:26:30 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	mandelbrot(t_complex c)
 
 	while ((z.x * z.x + z.y * z.y) < 4 && n < MAX_ITER)
 	{
-		z = cmplx_add(cmplx_mult(z, z), c);
+		z = c_add(c_mult(z, z), c);
 		n++;
 	}
 	return (n);
