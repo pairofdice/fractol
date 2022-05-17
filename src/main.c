@@ -3,14 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/10 15:29:02 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:49:42 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+
+void	colorslide(t_frame_buffer *fb)
+{
+	int	y;
+	int	x;
+	int	xc;
+	int	yc;
+
+	y = 0;
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			xc = (float)x / (float)WIN_W * 60;
+			yc = (float)y / (float)WIN_H * 60;
+			img_pixel_put(fb, x, y,
+				rgb_to_int((t_point){xc + 10, yc + 10, 10
+					+ (float)(xc + yc) / (float)2, 0}));
+			x++;
+		}
+		y++;
+	}
+}
+
+
+
+double	lerp(a, b, t)
+{
+	return ((1 - t) * a + b);
+}
+
+double	eerp(a, b, t)
+{
+	return (a^(1 - t) * b^t);
+}
+
 
 void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 {
@@ -28,41 +66,11 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 	p->x = x * cos(rotation) - y * sin(rotation);
 	p->y = y * cos(rotation) + x * sin(rotation);
 }
-void	colorslide(t_frame_buffer *fb)
-{
-	int	y;
-	int	x;
-	int	xc;
-	int	yc;
-	int color;
-
-	t_complex c;
-
-	y = 0;
-	while (y < WIN_H)
-	{
-		x = 0;
-		while (x < WIN_W)
-		{
-			xc = (((float)x / (float)WIN_W) * 2) -1;
-			yc = (((float)y / (float)WIN_H) * 2) -1;
-			c.x = xc;
-			c.y = -yc;
-
-			//printf("%.1f, %.1f ", c.x, c.y);
-			color = mandelbrot(c);
-			//printf("%d ", color);
-			img_pixel_put(fb, x, y, rgb_to_int((t_point){color * 5, color * 5, color * 5}));
-			x++;
-		}
-		//printf("\n");
-		y++;
-	}
-}
 
 
 int	draw_frame(t_context *ctx)
 {
+	/*
 	t_line	line;
 
 	ctx->frame_n++;
@@ -74,32 +82,38 @@ int	draw_frame(t_context *ctx)
 	a.y = 0.01;
 	int i = 0;
 
-/* 
+
 	while (i < ctx->frame_n)
 	{
-		a = cmplx_mult(a, a);
+		a = c_mult(a, a);
 		i++;
 	}
- */
+
 	line.b.x = WIN_H / 2 + a.x;
-	line.b.y = WIN_H / 2 + a.y;
+	line.b.y = WIN_H / 2 + a.y; */
 
 
-	//draw_line(&line, ctx);	
-	
-	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
-	
+	//draw_line(&line, ctx);
+
+
 	return (1);
 }
-
-
+static void	hook_em_up(t_context *ctx)
+{
+	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
+	mlx_hook(ctx->win, ON_KEYDOWN, 1L << 0, on_keypress, ctx);
+	mlx_hook(ctx->win, ON_DESTROY, 0, fdf_close, ctx);
+	mlx_hook(ctx->win, ON_MOUSEMOVE, 0, on_mouse_move, ctx);
+	mlx_hook(ctx->win, ON_MOUSEDOWN, 0, on_mouse_down, ctx);
+	mlx_hook(ctx->win, ON_MOUSEUP, 0, on_mouse_up, ctx);
+}
 
 int	main(/* int argc, char **argv */)
 {
 	t_context	ctx;
-	t_complex a;
-	t_complex b;
-	t_complex res;
+	t_complex	a;
+	t_complex	b;
+	t_complex	res;
 
 	a.x = 3;
 	a.y = 2;
@@ -107,19 +121,23 @@ int	main(/* int argc, char **argv */)
 	b.y = 2;
 
 	res = c_mult(a, b);
-	printf("%f %f", res.x, res.y);
+	/* printf("%f %f", res.x, res.y); */
 
 
-	
 
 	init_context(&ctx);
 	// handle_args(argc, argv, &ctx);
 	//colorslide(&ctx.fb);
 	mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
+	colorslide(&ctx.fb);
+	fractaldraw(&ctx);
+
+
+	mlx_put_image_to_window(ctx.mlx, ctx.win, ctx.fb.img, 0, 0);
 
 	// max_dimensions(&ctx);
 	// hook_em_up(&ctx);
-	colorslide(&ctx.fb);
+	hook_em_up(&ctx);
 	mlx_loop(ctx.mlx);
 	return (0);
 }

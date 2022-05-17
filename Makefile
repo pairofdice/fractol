@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
+#    By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/05/09 17:48:56 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/05/16 19:32:09 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRC = 	$Smain.c \
 		$Sbounds_checks.c \
 		$Spixel_put_color.c \
 		$Scomplex.c \
-		$Smandelbrot.c
+		$Smandelbrot.c \
+		$Shandle_it.c \
+		$Shandle_keys.c
 
 #H = includes/
 HDR = fractol.h

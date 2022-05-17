@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   complex.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 16:25:47 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/10 15:25:58 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:34:05 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ t_complex	c_sub(t_complex a, t_complex b)
 	return (result);
 }
 
-t_complex	c_abs(t_complex a)
+double	c_abs(t_complex a)
 {
-	t_complex	result;
-	return (result);
+	return (sqrt(a.x * a.x + a.y * a.y));
 }
 
 t_complex	c_mult(t_complex a, t_complex b)

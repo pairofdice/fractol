@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/10 15:26:27 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:49:30 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,56 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-# include "mlx.h"
+//# include "mlx.h"
+# include "../minilibx/mlx.h"
 # include <math.h>
+# include <stdlib.h>
 
 enum {
-	WIN_W = 1536,
-	WIN_H = 1024,
-	MAX_ITER = 0,
-	
+	WIN_W = 1111,
+	WIN_H = 777,
+	MAX_ITER = 50,
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 33,
+	Y_OFFSET = 31868,
+	KEY_MB_ESC = 65307,
+	KEY_MB_W = 119,
+	KEY_MB_A = 97,
+	KEY_MB_S = 115,
+	KEY_MB_D = 100,
+	KEY_MB_Q = 113,
+	KEY_MB_E = 101,
+	KEY_MB_R = 114,
+	KEY_MB_F = 102,
+	KEY_MB_T = 116,
+	KEY_MB_G = 103,
+	KEY_MB_P = 112,
+	KEY_MB_Z = 122,
+	KEY_MB_B = 98,
+	KEY_MB_C = 99,
+	KEY_MB_N = 110,
+	KEY_ESC = 53,
+	KEY_Q = 12,
+	KEY_E = 14,
+	KEY_R = 15,
+	KEY_F = 3,
+	KEY_T = 17,
+	KEY_G = 5,
+	KEY_D = 2,
+	KEY_A = 0,
+	KEY_S = 1,
+	KEY_W = 13,
+	KEY_B = 11,
+	KEY_P = 35,
+	KEY_Z = 6,
+	KEY_C = 8,
+	KEY_N = 45
+
 };
 
 typedef struct s_complex
@@ -76,6 +118,10 @@ typedef struct s_context
 	int				mouse_y;
 	int				right_mouse_dn;
 	int				left_mouse_dn;
+	int				SOffsetX;
+	int				SOffsetY;
+	double			world_w;
+	double			world_h;
 	int				frame_n;
 }	t_context;
 
@@ -89,10 +135,22 @@ void	checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 
 t_complex	c_add(t_complex a, t_complex b);
 t_complex	c_sub(t_complex a, t_complex b);
-t_complex	c_abs(t_complex a);
+double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
 
-int	rgb_to_int(t_point c);
-int	mandelbrot(t_complex c);
+int			rgb_to_int(t_point c);
+double		mandelbrot(t_complex c);
+void		fractaldraw(t_context *ctx);
+
+// handle_it
+int	on_keypress(int key_nb, t_context *ctx);
+int	fdf_close(t_context *vars);
+int	on_mouse_down(int button, int x, int y, t_context *ctx);
+int	on_mouse_move(int x, int y, t_context *ctx);
+int	on_mouse_up(int button, int x, int y, t_context *ctx);
+
+int	on_keys_a(int key_nb, t_context *ctx);
+int	on_keys_b(int key_nb, t_context *ctx);
+
 
 #endif
