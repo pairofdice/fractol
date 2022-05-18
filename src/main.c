@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/16 20:49:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:01:40 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 
 int	draw_frame(t_context *ctx)
 {
+	ctx->frame_n++;
 	/*
 	t_line	line;
 
-	ctx->frame_n++;
 	line.a.x = WIN_W / 2;
 	line.a.y = WIN_H / 2;
 
@@ -94,6 +94,8 @@ int	draw_frame(t_context *ctx)
 
 
 	//draw_line(&line, ctx);
+	fractaldraw(ctx);
+	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 
 
 	return (1);

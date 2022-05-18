@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/16 21:08:04 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:04:29 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_putstr(char const *s)
 		ft_putchar(*s++);
 }
 
-double	mandelbrot(t_complex c)
+double	mandelbrot(t_complex c, int max_iter)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -44,30 +44,30 @@ double	mandelbrot(t_complex c)
 	n = 0;
 	distance = 1e20;
 
-	while (i < 64 && n < 100)
+	while (i < 64 && n < max_iter)
 	{
 		//ft_putstr("HEI");
 
 		z = c_add(c_mult(z, z), c);
 		i = z.x * z.x + z.y * z.y;
 
-/* 		zMinusPoint = z;
+ 		zMinusPoint = z;
 		point.y = 0;
 		point.x = 0;
 		 zMinusPoint = c_sub(zMinusPoint, point);
 		zMinusPointDistance = c_abs(zMinusPoint);// zMinusPoint.magnitude();
 		if (zMinusPointDistance < distance)
-			distance = zMinusPointDistance; */
+			distance = zMinusPointDistance; 
 		n++;
 	}
-	return (n);
+	return (distance);
 }
 
 
-double	julia(t_complex z)
+double	julia(t_complex sxy, t_complex c, int max_iter)
 {
 	//t_complex	z;
-	t_complex	c;
+	//t_complex	c;
 	t_complex	zMinusPoint;
 	t_complex	point;
 	int	n;
@@ -77,21 +77,22 @@ double	julia(t_complex z)
 
 	//z.x = 0;
 	//z.y	= 0;
-	c.x = 0.355;
-	c.y	= 0.355;
+/* 	c.x = 0.355;
+	c.y	= 0.355; */
+	
 
 	i = 0;
 	n = 0;
 	distance = 1e20;
 
-	while (i < 64 && n < 100)
+	while (i < 64 && n < max_iter)
 	{
 		//ft_putstr("HEI");
 
-		z = c_add(c_mult(z, z), c);
-		i = z.x * z.x + z.y * z.y;
+		sxy = c_add(c_mult(sxy, sxy), c);
+		i = sxy.x * sxy.x + sxy.y * sxy.y;
 
-		zMinusPoint = z;
+		zMinusPoint = sxy;
 		point.y = 0;
 		point.x = 0;
 		 zMinusPoint = c_sub(zMinusPoint, point);
@@ -115,6 +116,11 @@ Complex zMinusPoint = new Complex(z);
 
  */
 
+double screen_to_world()
+{
+	return (0.0);
+}
+
 void	fractaldraw(t_context *ctx)
 {
 	int	y;
@@ -124,6 +130,7 @@ void	fractaldraw(t_context *ctx)
 	double	color;
 
 	t_complex c;
+	t_complex mouse;
 
 	y = 0;
 	while (y < WIN_H)
@@ -131,26 +138,29 @@ void	fractaldraw(t_context *ctx)
 		x = 0;
 		while (x < WIN_W)
 		{
-			xc = (4 * (float)x /(float)WIN_W) - 2.6;
-			yc = (4 * (float)y /(float)WIN_W) - 1.5;
+			//int osx = ctx->SOffsetX / WIN_W;
+			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale ;
+			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - 1.5 * ctx->scale;
 			//xc = lerp(-2, 2, (float)x/(float)WIN_W);
 			//yc = lerp(-2, 2, (float)y/(float)4);
-			c.x = xc;
-			c.y = -yc;
+			c.x = xc + ctx->SOffsetX;
+			c.y = -yc + ctx->SOffsetY;
 
 			/* printf("%.2f, %.2f, %.2f ", c.x, c.y, (float)x/(float)4);
 			*/
 			//printf("HEI\n");
 
-			//color = mandelbrot(c);
-			color = julia(c);
+			//color = mandelbrot(c, ctx->max_iter);
+			mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
+			mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
+			color = julia(c, mouse, ctx->max_iter);
 
 
 
 			img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){
-				125 - sin(0.1/ (color + 0.004)) * 125 + color * 30/* color * 50 +(1/ (color + 0.004))  */ ,
-				 125 - sin(0.07/ (color + 0.004)) * 125/* 255 - (1.0/color+1.0) */,
-				125 + sin(0.13/ (color + 0.004)) * 125/* 200- color*80 */}));
+				125 - sin(0.1/ (color + 0.004) + ctx->frame_n /10.0) * 125 + color * 30/* color * 50 +(1/ (color + 0.004))  */ ,
+				 125 - sin(0.07/ (color + 0.004) + ctx->frame_n / 10.0) * 125/* 255 - (1.0/color+1.0) */,
+				125 + sin(0.13/ (color + 0.004) + ctx->frame_n / 10.0) * 125/* 200- color*80 */}));
 			x++;
 		}/*
 		if (y % 25 == 0)

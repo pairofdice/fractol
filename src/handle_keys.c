@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/16 21:06:13 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:19:06 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	on_keys_b(int key_nb, t_context *ctx)
 {
  	if (key_nb == KEY_MB_W || key_nb == KEY_W)
-		ctx->SOffsetY -= 10;
+		ctx->SOffsetY -= 0.01;
 	if (key_nb == KEY_MB_A || key_nb == KEY_A)
-		ctx->SOffsetX -= 10;
+		ctx->SOffsetX -= 0.01;
 	if (key_nb == KEY_MB_S || key_nb == KEY_S)
-		ctx->SOffsetY += 10;
+		ctx->SOffsetY += 0.01;
 	if (key_nb == KEY_MB_D || key_nb == KEY_D)
-		ctx->SOffsetX += 10;
+		ctx->SOffsetX += 0.01;
 /*
 	if (key_nb == KEY_MB_B || key_nb == KEY_B)
 		switch_auto_rotation(ctx);
@@ -47,19 +47,19 @@ int	on_keys_a(int key_nb, t_context *ctx)
 {
 	if (key_nb == KEY_MB_ESC || key_nb == KEY_ESC)
 		fdf_close(ctx);
+	if (key_nb == KEY_MB_R || key_nb == KEY_R)
+		ctx->scale *= 1.1;
+	if (key_nb == KEY_MB_F || key_nb == KEY_F)
+		ctx->scale *= 0.9;
+	if (key_nb == KEY_MB_T || key_nb == KEY_T)
+		ctx->max_iter += 1;
+	if (key_nb == KEY_MB_G || key_nb == KEY_G)
+		ctx->max_iter -= 1;
 	/*
 	if (key_nb == KEY_MB_Q || key_nb == KEY_Q)
 		ctx->t.rot -= 128.0;
 	if (key_nb == KEY_MB_E || key_nb == KEY_E)
 		ctx->t.rot += 128.0;
-	if (key_nb == KEY_MB_R || key_nb == KEY_R)
-		ctx->t.scale *= 1.1;
-	if (key_nb == KEY_MB_F || key_nb == KEY_F)
-		ctx->t.scale *= 0.9;
-	if (key_nb == KEY_MB_T || key_nb == KEY_T)
-		ctx->t.zscale += 0.02;
-	if (key_nb == KEY_MB_G || key_nb == KEY_G)
-		ctx->t.zscale -= 0.02;
 	if (key_nb == KEY_MB_N || key_nb == KEY_N)
 		ctx->draw_bg *= -1;
 	 */
