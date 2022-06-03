@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/18 18:22:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:57:14 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-# include "mlx.h"
-//# include "../minilibx/mlx.h"
+//# include "mlx.h"
+# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 
 enum {
-	WIN_W = 999,
-	WIN_H = 999,
+	MAX_THREADS = 9,
+	TASK_QUEUE = 64,
+	WIN_W = 666,
+	WIN_H = 666,
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_MOUSEDOWN = 4,
@@ -65,11 +67,23 @@ enum {
 
 };
 
+typedef struct s_threadpool_task
+{
+	void (*function)(void*);
+	void *argument;
+}
+
 typedef struct s_complex
 {
 	double x;
 	double y;
 }	t_complex;
+
+typedef struct s_colors
+{
+	double a;
+	double b;
+}	t_colors;
 
 typedef struct s_point
 {
@@ -124,6 +138,8 @@ typedef struct s_context
 	double			world_h;
 	int				frame_n;
 	int				max_iter;
+	pthread_mutex_t	task_mutex;
+	size_t			task_index;
 }	t_context;
 
 void	init_context(t_context *ctx);
@@ -140,7 +156,7 @@ double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
-double		mandelbrot(t_complex c, int max_iter);
+t_colors		mandelbrot(t_complex c, int max_iter);
 void		fractaldraw(t_context *ctx);
 
 // handle_it

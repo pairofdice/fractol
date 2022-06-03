@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/18 18:19:06 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:21:34 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	on_keys_b(int key_nb, t_context *ctx)
 {
  	if (key_nb == KEY_MB_W || key_nb == KEY_W)
-		ctx->SOffsetY -= 0.01;
+		ctx->SOffsetY += 0.1 * ctx->scale;
 	if (key_nb == KEY_MB_A || key_nb == KEY_A)
-		ctx->SOffsetX -= 0.01;
+		ctx->SOffsetX -= 0.1 * ctx->scale;
 	if (key_nb == KEY_MB_S || key_nb == KEY_S)
-		ctx->SOffsetY += 0.01;
+		ctx->SOffsetY -= 0.1 * ctx->scale;
 	if (key_nb == KEY_MB_D || key_nb == KEY_D)
-		ctx->SOffsetX += 0.01;
+		ctx->SOffsetX += 0.1 * ctx->scale;
 /*
 	if (key_nb == KEY_MB_B || key_nb == KEY_B)
 		switch_auto_rotation(ctx);
@@ -48,9 +48,9 @@ int	on_keys_a(int key_nb, t_context *ctx)
 	if (key_nb == KEY_MB_ESC || key_nb == KEY_ESC)
 		fdf_close(ctx);
 	if (key_nb == KEY_MB_R || key_nb == KEY_R)
-		ctx->scale *= 1.1;
-	if (key_nb == KEY_MB_F || key_nb == KEY_F)
 		ctx->scale *= 0.9;
+	if (key_nb == KEY_MB_F || key_nb == KEY_F)
+		ctx->scale *= 1.1;
 	if (key_nb == KEY_MB_T || key_nb == KEY_T)
 		ctx->max_iter += 1;
 	if (key_nb == KEY_MB_G || key_nb == KEY_G)
