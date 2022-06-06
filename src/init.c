@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/18 21:10:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:56:42 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@ void	init_context(t_context *ctx)
 	ctx->frame_n = 0;
 	ctx->SOffsetX = 0;
 	ctx->SOffsetY = 0;
-	ctx->world_w = 2.5;
 
-	ctx->world_h = 2;
 	ctx->scale = 1;
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;
 	ctx->max_iter = 80;
+	ctx->pause = 0;
+
+	ctx->world_w = 2.5;
+	ctx->world_h = ctx->world_w * ((float)WIN_H/WIN_W);
+
+
+
 }

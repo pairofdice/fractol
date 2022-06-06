@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/06 12:38:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:31:25 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_thread_task
 	//void (*function)(void*);
 	void *argument;
 }	t_thread_task;
-
+ 
 typedef struct s_complex
 {
 	double x;
@@ -139,8 +139,9 @@ typedef struct s_context
 	double			world_h;
 	int				frame_n;
 	int				max_iter;
-	pthread_mutex_t	task_mutex;
-	size_t			task_index;
+	int				pause;
+	//pthread_mutex_t	task_mutex;
+	//size_t			task_index;
 }	t_context;
 
 void	init_context(t_context *ctx);

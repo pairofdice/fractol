@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/26 21:21:34 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:35:17 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int	on_keys_b(int key_nb, t_context *ctx)
 	{
 		ctx->t.color_map++;
 		ctx->t.color_map %= NUM_COLORS;
-	}
+	}*/
 	if (key_nb == KEY_MB_P || key_nb == KEY_P)
 	{
-		ctx->t.projection++;
-		ctx->t.projection %= NUM_PROJ + 1;
-	} */
+		if (ctx->pause == 0)
+			ctx->pause = 1;
+		else
+			ctx->pause = 0;
+	}
 
 /*
 	if (key_nb == KEY_MB_Z || key_nb == KEY_Z)

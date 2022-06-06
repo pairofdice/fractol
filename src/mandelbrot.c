@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/30 13:26:12 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:32:40 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 #include <unistd.h>
+
+double ft_fabs(double n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
 
 void	ft_putchar(char c)
 {
@@ -26,6 +33,48 @@ void	ft_putstr(char const *s)
 	while (*s)
 		ft_putchar(*s++);
 }
+t_colors	mandelbrotb(t_complex c, int max_iter)
+{
+	t_complex	z;
+	t_complex	zMinusPoint;
+	t_complex	point;
+	int	n;
+	int i;
+	double distance;
+	double zMinusPointDistance;
+	t_colors colors;
+
+	z.x = 0;
+	z.y	= 0;
+
+	i = 0;
+	n = 0;
+	distance = 1e20;
+
+	while (i < 64 && n < max_iter)
+	{
+
+
+		z = c_mult(z, z);
+		z.x = sin(z.x);
+		z = c_add(c_mult(z, z), c);
+		z.y = ft_fabs(z.y);
+		i = z.x * z.x * z.y + z.y * z.y;
+
+ 		zMinusPoint = z;
+		point.y = z.y * z.x;
+		point.x = 0;
+		 zMinusPoint = c_sub(zMinusPoint, point);
+		zMinusPointDistance = c_abs(zMinusPoint);// zMinusPoint.magnitude();
+		if (zMinusPointDistance < distance)
+			distance = zMinusPointDistance;
+		n++;
+	}
+	colors.a = n;
+	colors.b = distance;
+	return (colors);
+}
+
 
 t_colors	mandelbrot(t_complex c, int max_iter)
 {
@@ -64,8 +113,47 @@ t_colors	mandelbrot(t_complex c, int max_iter)
 	return (colors);
 }
 
+t_colors	burning_ship(t_complex c, int max_iter)
+{
+	t_complex	z;
+	t_complex	zMinusPoint;
+	t_complex	point;
+	int	n;
+	int i;
+	double distance;
+	double zMinusPointDistance;
+	t_colors colors;
 
-double	julia(t_complex sxy, t_complex c, int max_iter)
+	z.x = 0;
+	z.y	= 0;
+
+	i = 0;
+	n = 0;
+	distance = 1e20;
+
+	while (i < 64 && n < max_iter)
+	{
+		z.x = ft_fabs(z.x);
+		z.y = ft_fabs(z.y);
+		z = c_add(c_mult(z, z), c);
+		i = z.x * z.x + z.y * z.y;
+
+ 		zMinusPoint = z;
+		point.y = z.y * z.x;
+		point.x = 0;
+		 zMinusPoint = c_sub(zMinusPoint, point);
+		zMinusPointDistance = c_abs(zMinusPoint);// zMinusPoint.magnitude();
+		if (zMinusPointDistance < distance)
+			distance = zMinusPointDistance;
+		n++;
+	}
+	colors.a = n;
+	colors.b = distance;
+	return (colors);
+}
+
+
+t_colors	julia(t_complex sxy, t_complex c, int max_iter)
 {
 	//t_complex	z;
 	//t_complex	c;
@@ -75,6 +163,7 @@ double	julia(t_complex sxy, t_complex c, int max_iter)
 	int i;
 	double distance;
 	double zMinusPointDistance;
+	t_colors colors;
 
 	//z.x = 0;
 	//z.y	= 0;
@@ -86,10 +175,16 @@ double	julia(t_complex sxy, t_complex c, int max_iter)
 	n = 0;
 	distance = 1e20;
 
+	// koita laittaa siihen sun juliaan tää kaava
+	// ((((z^8 / c) + z^11) + c) * z) * c
+	// tai tää ((z^9 + z) + (z^2 * c)^2) / z
+	// tai mandelbrotiin tää  z^3 + c
+
 	while (i < 64 && n < max_iter)
 	{
 		//ft_putstr("HEI");
-
+c_mult(sxy, sxy);
+c_mult(sxy, sxy);
 		sxy = c_add(c_mult(sxy, sxy), c);
 		i = sxy.x * sxy.x + sxy.y * sxy.y;
 
@@ -102,7 +197,9 @@ double	julia(t_complex sxy, t_complex c, int max_iter)
 			distance = zMinusPointDistance;
 		n++;
 	}
-	return (distance);
+	colors.a = n;
+	colors.b = distance;
+	return (colors);
 }
 
 
@@ -140,21 +237,28 @@ void	fractaldraw(t_context *ctx)
 		while (x < WIN_W)
 		{
 			//int osx = ctx->SOffsetX / WIN_W;
-			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale ;
-			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - 1.5 * ctx->scale;
+			ctx->world_w = ctx->world_w * ctx->scale;
+			ctx->world_h = ctx->world_h * ctx->scale;
+			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - ctx->world_w;
+			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - ctx->world_h;
 			//xc = lerp(-2, 2, (float)x/(float)WIN_W);
 			//yc = lerp(-2, 2, (float)y/(float)4);
 			c.x = xc + ctx->SOffsetX;
-			c.y = -yc + ctx->SOffsetY;
+			c.y = yc + ctx->SOffsetY;
 
 			/* printf("%.2f, %.2f, %.2f ", c.x, c.y, (float)x/(fl oat)4);
 			*/
 			//printf("HEI\n");
 
 			t_colors color = mandelbrot(c, ctx->max_iter);
-			mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
-			mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
-			//color = julia(c, mouse, ctx->max_iter);
+			//t_colors color = mandelbrotb(c, ctx->max_iter);
+			// t_colors color = burning_ship(c, ctx->max_iter);
+			if (!ctx->pause)
+			{
+				mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
+				mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
+			}
+			//t_colors color = julia(c, mouse, ctx->max_iter);
 
 
 
