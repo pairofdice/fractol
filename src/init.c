@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/06 12:56:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:11:34 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_context(t_context *ctx)
 	ctx->pause = 0;
 
 	ctx->world_w = 2.5;
-	ctx->world_h = ctx->world_w * ((float)WIN_H/WIN_W);
+	ctx->world_h = ctx->world_w * (float)WIN_H/(float)WIN_W;
 
 
 

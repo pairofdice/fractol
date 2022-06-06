@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/06 15:32:40 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:22:28 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	fractaldraw(t_context *ctx)
 	t_complex c;
 	t_complex mouse;
 
+	
 	y = 0;
 	while (y < WIN_H)
 	{
@@ -237,10 +238,8 @@ void	fractaldraw(t_context *ctx)
 		while (x < WIN_W)
 		{
 			//int osx = ctx->SOffsetX / WIN_W;
-			ctx->world_w = ctx->world_w * ctx->scale;
-			ctx->world_h = ctx->world_h * ctx->scale;
-			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - ctx->world_w;
-			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - ctx->world_h;
+			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale;
+			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - 1 * ctx->scale; //ctx->world_h;
 			//xc = lerp(-2, 2, (float)x/(float)WIN_W);
 			//yc = lerp(-2, 2, (float)y/(float)4);
 			c.x = xc + ctx->SOffsetX;
@@ -275,3 +274,4 @@ void	fractaldraw(t_context *ctx)
 }
 // 255 - (1/ (color + 0.004))
 // 255 - color * 100
+

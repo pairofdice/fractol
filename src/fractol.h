@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/06 15:31:25 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:32:30 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ enum {
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 33,
-	Y_OFFSET = 31868,
+	//Y_OFFSET = 31868,
+	Y_OFFSET = 32102,
 	KEY_MB_ESC = 65307,
 	KEY_MB_W = 119,
 	KEY_MB_A = 97,

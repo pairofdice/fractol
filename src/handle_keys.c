@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/03 15:35:17 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:25:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,23 @@ int	on_keys_a(int key_nb, t_context *ctx)
 	if (key_nb == KEY_MB_ESC || key_nb == KEY_ESC)
 		fdf_close(ctx);
 	if (key_nb == KEY_MB_R || key_nb == KEY_R)
+	{
 		ctx->scale *= 0.9;
+		ctx->world_w *= 0.9;
+	printf("WORLD H %f SCALE %f \n",ctx->world_h,ctx->scale);
+	ctx->world_h = 0.9;
+		ctx->SOffsetY += ctx->world_h * ctx->scale * (double)(ctx->mouse_y)/WIN_H;
+		printf("world_h %f scale %f mouse/screen ratio %f Offset maybe? %f WIN_H %f\n", ctx->world_h,  ctx->scale, (double)(ctx->mouse_y)/WIN_H, ctx->world_h * ctx->scale * (double)ctx->mouse_y/WIN_H, (float)WIN_H/(float)WIN_W);
+
+	}
 	if (key_nb == KEY_MB_F || key_nb == KEY_F)
+	{
+		ctx->world_w  *= 1.1;
+	printf("WORLD H %f SCALE %f \n",ctx->world_h,ctx->scale);
+		ctx->world_h  *= 1.1;
 		ctx->scale *= 1.1;
+
+	}
 	if (key_nb == KEY_MB_T || key_nb == KEY_T)
 		ctx->max_iter += 1;
 	if (key_nb == KEY_MB_G || key_nb == KEY_G)
