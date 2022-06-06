@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/02 14:57:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:38:42 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-//# include "mlx.h"
-# include "../minilibx/mlx.h"
+# include "mlx.h"
+//# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
+# include <pthread.h>
 
 enum {
 	MAX_THREADS = 9,
@@ -67,11 +68,11 @@ enum {
 
 };
 
-typedef struct s_threadpool_task
+typedef struct s_thread_task
 {
-	void (*function)(void*);
+	//void (*function)(void*);
 	void *argument;
-}
+}	t_thread_task;
 
 typedef struct s_complex
 {
