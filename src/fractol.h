@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/02 14:57:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:32:54 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ enum {
 
 };
 
-typedef struct s_threadpool_task
+/* typedef struct s_threadpool_task
 {
 	void (*function)(void*);
 	void *argument;
 }
-
+ */
 typedef struct s_complex
 {
 	double x;
@@ -138,8 +138,9 @@ typedef struct s_context
 	double			world_h;
 	int				frame_n;
 	int				max_iter;
-	pthread_mutex_t	task_mutex;
-	size_t			task_index;
+	int				pause;
+	//pthread_mutex_t	task_mutex;
+	//size_t			task_index;
 }	t_context;
 
 void	init_context(t_context *ctx);

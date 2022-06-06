@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/18 21:10:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:33:04 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	init_context(t_context *ctx)
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;
 	ctx->max_iter = 80;
+	ctx->pause = 0;
 }
