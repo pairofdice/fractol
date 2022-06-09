@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 12:41:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:24:27 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,11 +237,12 @@ void	fractaldraw(t_context *ctx)
 		x = 0;
 		while (x < WIN_W)
 		{
-			//int osx = ctx->SOffsetX / WIN_W;
-			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale;
-			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - 1.5 * ctx->scale;
-			//xc = lerp(-2, 2, (float)x/(float)WIN_W);
-			//yc = lerp(-2, 2, (float)y/(float)4);
+
+			xc = (3 * ctx->scale * (float)x /(float)WIN_W) - 2.5 * ctx->scale;
+			yc = (3 * ctx->scale * (float)y /(float)WIN_W) - 1.5 * ctx->scale;
+
+
+
 			c.x = xc + ctx->SOffsetX;
 			c.y = yc + ctx->SOffsetY;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 12:40:31 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:50:41 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ int	on_mouse_up(int button, int x, int y, t_context *ctx);
 
 int	on_keys_a(int key_nb, t_context *ctx);
 int	on_keys_b(int key_nb, t_context *ctx);
+
+void	zoom_to_mouse(t_context *ctx, double in_out);
 
 
 #endif
