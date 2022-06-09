@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/* /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
@@ -70,7 +70,7 @@ void	draw_line(t_line *line, t_context *ctx)
 	color.x = 255;
 	color.y = 255;
 	color.z = 255;
-	/* if (!neither_point_in_window(line, ctx)) 
+	/* if (!neither_point_in_window(line, ctx))
 	{*/
 		while (steps >= 0)
 		{
@@ -83,3 +83,4 @@ void	draw_line(t_line *line, t_context *ctx)
 		}
 	/* } */
 }
+ */

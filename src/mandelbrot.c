@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/03 19:17:29 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:13:05 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void	fractaldraw(t_context *ctx)
 		while (x < WIN_W)
 		{
 			//int osx = ctx->SOffsetX / WIN_W;
-			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale ;
+			xc = (4 * ctx->scale * (float)x /(float)WIN_W) - 2.6 * ctx->scale;
 			yc = (4 * ctx->scale * (float)y /(float)WIN_W) - 1.5 * ctx->scale;
 			//xc = lerp(-2, 2, (float)x/(float)WIN_W);
 			//yc = lerp(-2, 2, (float)y/(float)4);
@@ -249,7 +249,7 @@ void	fractaldraw(t_context *ctx)
 			//printf("HEI\n");
 
 			t_colors color = mandelbrot(c, ctx->max_iter);
-			//t_colors color = mandelbrotb(c, ctx->max_iter);
+			// t_colors color = mandelbrotb(c, ctx->max_iter);
 			// t_colors color = burning_ship(c, ctx->max_iter);
 			if (!ctx->pause)
 			{
