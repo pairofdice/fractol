@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 12:13:05 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:41:14 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	fractaldraw(t_context *ctx)
 	t_complex c;
 	t_complex mouse;
 
+
 	y = 0;
 	while (y < WIN_H)
 	{
@@ -273,3 +274,4 @@ void	fractaldraw(t_context *ctx)
 }
 // 255 - (1/ (color + 0.004))
 // 255 - color * 100
+

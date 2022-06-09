@@ -83,4 +83,4 @@ void	draw_line(t_line *line, t_context *ctx)
 		}
 	/* } */
 }
- */
+

@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 12:10:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:40:31 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-//# include "mlx.h"
-# include "../minilibx/mlx.h"
+# include "mlx.h"
+//# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
+# include <pthread.h>
 
 enum {
 	MAX_THREADS = 9,
@@ -31,7 +32,8 @@ enum {
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 33,
-	Y_OFFSET = 31868,
+	//Y_OFFSET = 31868,
+	Y_OFFSET = 32102,
 	KEY_MB_ESC = 65307,
 	KEY_MB_W = 119,
 	KEY_MB_A = 97,
@@ -67,12 +69,12 @@ enum {
 
 };
 
-/* typedef struct s_threadpool_task
+typedef struct s_thread_task
 {
-	void (*function)(void*);
+	//void (*function)(void*);
 	void *argument;
-}
- */
+}	t_thread_task;
+
 typedef struct s_complex
 {
 	double x;
