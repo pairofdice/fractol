@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:59:05 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 17:43:15 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:01:33 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,17 @@ int	on_mouse_move(int x, int y, t_context *ctx)
 		// printf("%f %f\n", dx, dy);
 		ctx->SOffsetX += dx  / 260.0 * ctx->scale;
 		ctx->SOffsetY += dy  / 260.0 * ctx->scale;
-	}
+	} 
+
+	
+	
 	if (ctx->left_mouse_dn == 1)
-		ctx->scale += dy / 260.0 * ctx->scale; 
-	ctx->mouse_x = x;
-	ctx->mouse_y = y - Y_OFFSET;
+		zoom_to_mouse(ctx, 0.9); 
+	else 
+	{
+		ctx->mouse_x = x;
+		ctx->mouse_y = y - Y_OFFSET;
+	}
 	return (0);
 }
 
