@@ -6,7 +6,7 @@
 #    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/06/09 13:02:55 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/06/14 16:05:20 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ S = src/
 SRC = 	$Smain.c \
 		$Sinit.c \
 		$Sline.c \
+		$Sfractals.c \
 		$Sbounds_checks.c \
 		$Spixel_put_color.c \
 		$Scomplex.c \
-		$Smandelbrot.c \
+		$Smultithread.c \
 		$Shandle_it.c \
 		$Shandle_keys.c \
 		$Szoom.c

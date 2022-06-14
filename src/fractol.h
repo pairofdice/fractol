@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 16:50:41 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:59:49 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,18 @@ enum {
 
 };
 
-typedef struct s_thread_task
-{
-	//void (*function)(void*);
-	void *argument;
-}	t_thread_task;
 
 typedef struct s_complex
 {
 	double x;
 	double y;
 }	t_complex;
+
+typedef struct s_thread_task
+{
+	void (*fractal_thread_fun)(t_complex, void*);
+	int	task;
+}	t_thread_task;
 
 typedef struct s_colors
 {
@@ -141,8 +142,10 @@ typedef struct s_context
 	int				frame_n;
 	int				max_iter;
 	int				pause;
-	//pthread_mutex_t	task_mutex;
-	//size_t			task_index;
+	pthread_mutex_t	task_mutex;
+	size_t			task_index;
+	size_t			tasks_done;
+	t_thread_task	*task_list;
 }	t_context;
 
 void	init_context(t_context *ctx);

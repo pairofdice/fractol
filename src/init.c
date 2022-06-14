@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/10 14:02:51 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:02:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	init_context(t_context *ctx)
 
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float)WIN_H/(float)WIN_W;
+	ctx->task_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	ctx->task_list = malloc(sizeof(t_thread_task) * TASK_QUEUE); // malloc needs a check for success
 
 
 
