@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/14 15:59:49 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:12:29 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-# include "mlx.h"
-//# include "../minilibx/mlx.h"
+//# include "mlx.h"
+# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
@@ -76,11 +76,6 @@ typedef struct s_complex
 	double y;
 }	t_complex;
 
-typedef struct s_thread_task
-{
-	void (*fractal_thread_fun)(t_complex, void*);
-	int	task;
-}	t_thread_task;
 
 typedef struct s_colors
 {
@@ -143,9 +138,9 @@ typedef struct s_context
 	int				max_iter;
 	int				pause;
 	pthread_mutex_t	task_mutex;
-	size_t			task_index;
+	size_t			tasks_taken;
 	size_t			tasks_done;
-	t_thread_task	*task_list;
+	void 			(*f)(t_complex *, t_context *);
 }	t_context;
 
 void	init_context(t_context *ctx);
@@ -163,7 +158,8 @@ t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
 t_colors		mandelbrot(t_complex c, int max_iter);
-void		fractaldraw(t_context *ctx);
+//void		fractaldraw(t_context *ctx, int task);
+void	fractaldraw(t_context *ctx, int task, void (*f)(t_complex *, t_context *));
 
 // handle_it
 int	on_keypress(int key_nb, t_context *ctx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multithread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/14 16:07:37 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/14 20:25:01 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 #include <unistd.h>
 
-double ft_fabs(double n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
 
 void	ft_putchar(char c)
 {
@@ -47,10 +41,21 @@ Complex zMinusPoint = new Complex(z);
 
 double screen_to_world()
 {
-	return (0.0);
+	return (0.0); // ?????
 }
 
-void	fractaldraw(t_context *ctx)
+void taskmaster(t_context *ctx)
+{
+	int task;
+
+	task = ctx->tasks_taken;
+	if (task < TASK_QUEUE)
+	{
+
+	}
+}
+
+void	fractaldraw(t_context *ctx, int task)
 {
 	int	y;
 	int	x;
