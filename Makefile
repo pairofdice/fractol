@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/06/14 17:07:15 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/06/15 17:02:15 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ S = src/
 SRC = 	$Smain.c \
 		$Sinit.c \
 		$Sline.c \
-		$Sutils.c \
 		$Sfractals.c \
 		$Sbounds_checks.c \
 		$Spixel_put_color.c \
@@ -23,7 +22,8 @@ SRC = 	$Smain.c \
 		$Smultithread.c \
 		$Shandle_it.c \
 		$Shandle_keys.c \
-		$Szoom.c
+		$Szoom.c \
+		$Sutils.c
 
 #H = includes/
 HDR = fractol.h

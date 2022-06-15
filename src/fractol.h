@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/14 20:12:29 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:36:15 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-//# include "mlx.h"
-# include "../minilibx/mlx.h"
+# include "mlx.h"
+//# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
 
+#include <time.h>
+
 enum {
-	MAX_THREADS = 9,
+	NUM_THREADS = 3,
 	TASK_QUEUE = 64,
 	WIN_W = 666,
 	WIN_H = 666,
@@ -140,7 +142,10 @@ typedef struct s_context
 	pthread_mutex_t	task_mutex;
 	size_t			tasks_taken;
 	size_t			tasks_done;
-	void 			(*f)(t_complex *, t_context *);
+	pthread_t		threadpool[NUM_THREADS];
+	clock_t			prev;
+	clock_t			curr;
+	
 }	t_context;
 
 void	init_context(t_context *ctx);
@@ -159,7 +164,7 @@ t_complex	c_mult(t_complex a, t_complex b);
 int			rgb_to_int(t_point c);
 t_colors		mandelbrot(t_complex c, int max_iter);
 //void		fractaldraw(t_context *ctx, int task);
-void	fractaldraw(t_context *ctx, int task, void (*f)(t_complex *, t_context *));
+void	fractaldraw(t_context *ctx, int task);
 
 // handle_it
 int	on_keypress(int key_nb, t_context *ctx);
@@ -172,6 +177,7 @@ int	on_keys_a(int key_nb, t_context *ctx);
 int	on_keys_b(int key_nb, t_context *ctx);
 
 void	zoom_to_mouse(t_context *ctx, double in_out);
+double ft_fabs(double n);
 
 
 #endif

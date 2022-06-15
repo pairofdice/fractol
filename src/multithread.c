@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multithread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/14 20:25:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:13:33 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	fractaldraw(t_context *ctx, int task)
 
 	// get task, share work based on tasks
 
-	y = 0;
+	y = task;
 	while (y < WIN_H)
 	{
 		x = 0;
-		while (x < WIN_W)
+		while (x < WIN_W - task * 6 )
 		{
 
 			xc = (3 * ctx->scale * (float)x /(float)WIN_W) - 2.5 * ctx->scale;
@@ -89,7 +89,7 @@ void	fractaldraw(t_context *ctx, int task)
 
 			t_colors color = mandelbrot(c, ctx->max_iter);
 			// t_colors color = mandelbrotb(c, ctx->max_iter);
-			// t_colors color = burning_ship(c, ctx->max_iter);
+			//t_colors color = burning_ship(c, ctx->max_iter);
 			if (!ctx->pause)
 			{
 				mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
@@ -107,7 +107,7 @@ void	fractaldraw(t_context *ctx, int task)
 		}/*
 		if (y % 25 == 0)
 			printf("\n"); */
-		y++;
+		y += MAX_THREADS;
 	}
 }
 // 255 - (1/ (color + 0.004))

@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:59:05 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/10 14:01:33 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:17:06 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	on_keypress(int key_nb, t_context *ctx)
 {
 	on_keys_a(key_nb, ctx);
 	on_keys_b(key_nb, ctx);
-	fractaldraw(ctx);
+
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 
 	return (0);

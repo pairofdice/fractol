@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/09 17:53:46 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:17:45 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
+
+    double cpu_time_used;
+     
+     
+     clock_t curr;
+	curr = clock();
+	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
+	printf("%f\n", 1/cpu_time_used);
+	ctx->prev = clock();
 	/*
 	t_line	line;
 
@@ -94,11 +103,15 @@ int	draw_frame(t_context *ctx)
 
 
 	//draw_line(&line, ctx);
-	
-	fractaldraw(ctx);
+/* 	int task;
+
+	task = 0;
+	while (task < TASK_QUEUE)
+	{ */
+		fractaldraw(ctx, ctx->frame_n % MAX_THREADS);
+/* 		task++;
+	} */
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
-
-
 	return (1);
 }
 static void	hook_em_up(t_context *ctx)
@@ -132,7 +145,7 @@ int	main(/* int argc, char **argv */)
 	//colorslide(&ctx.fb);
 	mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
 	colorslide(&ctx.fb);
-	fractaldraw(&ctx);
+	//fractaldraw(&ctx, 0);
 
 
 	mlx_put_image_to_window(ctx.mlx, ctx.win, ctx.fb.img, 0, 0);
