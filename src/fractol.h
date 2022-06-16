@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/15 18:36:15 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-# include "mlx.h"
-//# include "../minilibx/mlx.h"
+//# include "mlx.h"
+# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
@@ -24,7 +24,7 @@
 
 enum {
 	NUM_THREADS = 3,
-	TASK_QUEUE = 64,
+	NUM_TASKS = 64,
 	WIN_W = 666,
 	WIN_H = 666,
 	ON_KEYDOWN = 2,
@@ -85,15 +85,15 @@ typedef struct s_colors
 	double b;
 }	t_colors;
 
-typedef struct s_point
+ typedef struct s_point
 {
 	double	x;
 	double	y;
 	double	z;
 	double	c;
-}	t_point;
+} t_point;
 
-typedef struct s_deltas
+/* typedef struct s_deltas
 {
 	double	x;
 	double	y;
@@ -101,14 +101,14 @@ typedef struct s_deltas
 	double	r;
 	double	g;
 	double	b;
-}	t_deltas;
+}	t_deltas; */
 
-typedef struct s_line
+/* typedef struct s_line
 {
 	t_point	a;
 	t_point	b;
 }	t_line;
-
+ */
 typedef struct s_frame_buffer
 {
 	void	*img;
@@ -137,21 +137,28 @@ typedef struct s_context
 	double			world_w;
 	double			world_h;
 	int				frame_n;
+	int				n;
 	int				max_iter;
 	int				pause;
 	pthread_mutex_t	task_mutex;
-	size_t			tasks_taken;
+	pthread_mutex_t	tasks_taken_mutex;
+	pthread_mutex_t	tasks_done_mutex;
+	pthread_mutex_t	frame_start_mutex;
+	pthread_mutex_t	frame_end_mutex;
+	pthread_cond_t	frame_start_cv;
+	pthread_cond_t	frame_end_cv;
 	size_t			tasks_done;
+	size_t			tasks_taken;
 	pthread_t		threadpool[NUM_THREADS];
 	clock_t			prev;
 	clock_t			curr;
-	
+
 }	t_context;
 
 void	init_context(t_context *ctx);
-void	draw_line(t_line *line, t_context *ctx);
+/* void	draw_line(t_line *line, t_context *ctx);
 int	neither_point_in_window(t_line *l, t_context *ctx);
-int	points_in_window(t_line *l, t_context *ctx);
+int	points_in_window(t_line *l, t_context *ctx); */
 
 void	img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 void	checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
@@ -178,6 +185,7 @@ int	on_keys_b(int key_nb, t_context *ctx);
 
 void	zoom_to_mouse(t_context *ctx, double in_out);
 double ft_fabs(double n);
+void taskhandler(void *ctx);
 
 
 #endif

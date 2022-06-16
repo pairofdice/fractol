@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/15 15:16:41 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,27 @@ void	init_context(t_context *ctx)
 	ctx->right_mouse_dn = 0;
 	ctx->max_iter = 80;
 	ctx->pause = 0;
+	ctx->n = 0;
+	ctx->tasks_done = 0;
+	ctx->tasks_taken = 0;
 
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float)WIN_H/(float)WIN_W;
 	ctx->task_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-	//ctx->task_list = malloc(sizeof(t_thread_task) * TASK_QUEUE); // malloc needs a check for success
+	ctx->frame_start_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	ctx->frame_end_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	ctx->frame_start_cv = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
+	ctx->frame_end_cv = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
+	//ctx->task_list = malloc(sizeof(t_thread_task) * NUM_TASKS); // malloc needs a check for success
+	int i = 0;
+	while (i < NUM_THREADS)
+	{
+		//pthread_create(&thr[i], NULL, (void *(*)(void *))threads, (void *)&thread[i]))
+		//printf("hello, creating threads\n");
 
+		pthread_create(&ctx->threadpool[i], NULL,  (void *(*)(void *))taskhandler, (void *)ctx);
+		i++;
+	}
 
 
 }

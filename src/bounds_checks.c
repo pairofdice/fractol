@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   bounds_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:07:15 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/05/06 14:18:12 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:16:15 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
+/*
 int	neither_point_in_window(t_line *l, t_context *ctx)
 {
 	if ((l->a.x < 0 && l->b.x < 0)
@@ -32,3 +32,4 @@ int	points_in_window(t_line *l, t_context *ctx)
 		return (0);
 	return (1);
 }
+ */

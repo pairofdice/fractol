@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_it.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:59:05 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/15 15:17:06 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:39:39 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 
 int	on_keypress(int key_nb, t_context *ctx)
 {
+	//mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+
 	on_keys_a(key_nb, ctx);
 	on_keys_b(key_nb, ctx);
 
-	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+	//mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 
 	return (0);
 }
@@ -59,13 +61,13 @@ int	on_mouse_move(int x, int y, t_context *ctx)
 		// printf("%f %f\n", dx, dy);
 		ctx->SOffsetX += dx  / 260.0 * ctx->scale;
 		ctx->SOffsetY += dy  / 260.0 * ctx->scale;
-	} 
+	}
 
-	
-	
+
+
 	if (ctx->left_mouse_dn == 1)
-		zoom_to_mouse(ctx, 0.9); 
-	else 
+		zoom_to_mouse(ctx, 0.9);
+	else
 	{
 		ctx->mouse_x = x;
 		ctx->mouse_y = y - Y_OFFSET;

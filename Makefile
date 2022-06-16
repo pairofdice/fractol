@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
+#    By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/06/15 17:02:15 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/06/16 17:11:06 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = fractol
 S = src/
 SRC = 	$Smain.c \
 		$Sinit.c \
-		$Sline.c \
 		$Sfractals.c \
 		$Sbounds_checks.c \
 		$Spixel_put_color.c \

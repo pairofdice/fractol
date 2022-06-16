@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/15 18:17:45 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+
+int	rgb_to_int(t_point c)
+{
+	return ((int)c.x << 16 | (int)c.y << 8 | (int)c.z);
+}
 
 void	colorslide(t_frame_buffer *fb)
 {
@@ -57,7 +62,6 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 	float	rotation;
 
 
-
 	rotation = ctx->frame_n / 1000.0;
 	x = p->x;
 	y = p->y;
@@ -73,44 +77,24 @@ int	draw_frame(t_context *ctx)
 	ctx->frame_n++;
 
     double cpu_time_used;
-     
-     
-     clock_t curr;
+    clock_t curr;
 	curr = clock();
 	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
 	printf("%f\n", 1/cpu_time_used);
 	ctx->prev = clock();
-	/*
-	t_line	line;
-
-	line.a.x = WIN_W / 2;
-	line.a.y = WIN_H / 2;
-
-	t_complex a;
-	a.x = 0.999;
-	a.y = 0.01;
-	int i = 0;
 
 
-	while (i < ctx->frame_n)
-	{
-		a = c_mult(a, a);
-		i++;
-	}
+	//printf("-- Frame # %d\n", ctx->frame_n);
 
-	line.b.x = WIN_H / 2 + a.x;
-	line.b.y = WIN_H / 2 + a.y; */
-
-
-	//draw_line(&line, ctx);
-/* 	int task;
-
-	task = 0;
-	while (task < TASK_QUEUE)
-	{ */
-		fractaldraw(ctx, ctx->frame_n % MAX_THREADS);
-/* 		task++;
-	} */
+	pthread_mutex_lock(&ctx->frame_start_mutex);
+	pthread_cond_broadcast(&ctx->frame_start_cv);
+	pthread_mutex_unlock(&ctx->frame_start_mutex);
+	//fractaldraw(ctx, ctx->frame_n % NUM_THREADS);
+	pthread_mutex_lock(&ctx->frame_end_mutex);
+	// printf("--- hi from render_frame 1\n");
+	pthread_cond_wait(&ctx->frame_end_cv,  &ctx->frame_end_mutex);
+	// printf("--- hi from render_frame 2\n");
+	pthread_mutex_unlock(&ctx->frame_end_mutex);
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 	return (1);
 }
@@ -143,18 +127,17 @@ int	main(/* int argc, char **argv */)
 	init_context(&ctx);
 	// handle_args(argc, argv, &ctx);
 	//colorslide(&ctx.fb);
-	mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
+	//mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
 	colorslide(&ctx.fb);
-	//fractaldraw(&ctx, 0);
-
-
 	mlx_put_image_to_window(ctx.mlx, ctx.win, ctx.fb.img, 0, 0);
 
-	// max_dimensions(&ctx);
-	// hook_em_up(&ctx);
-	hook_em_up(&ctx);
-	mlx_hook(ctx.win, ON_MOUSEMOVE, 0, on_mouse_move, &ctx);
+	// fractaldraw(&ctx, 0);
 
+	//taskhandler(&ctx);
+
+
+	hook_em_up(&ctx);
 	mlx_loop(ctx.mlx);
+
 	return (0);
 }
