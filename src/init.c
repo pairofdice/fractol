@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 09:35:43 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	init_context(t_context *ctx)
 
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float)WIN_H/(float)WIN_W;
-	ctx->task_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	//ctx->task_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	ctx->tasks_done_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	ctx->tasks_taken_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	ctx->frame_start_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	ctx->frame_end_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	ctx->frame_start_cv = (pthread_cond_t)PTHREAD_COND_INITIALIZER;

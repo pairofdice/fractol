@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 10:10:58 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void taskhandler(void *context)
 		}
 		pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
-		printf("hello taskhandler 4\n");
+		//printf("hello taskhandler 4\n");
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
 		if ( ctx->tasks_taken < NUM_TASKS)
 		{
@@ -78,7 +78,7 @@ void taskhandler(void *context)
 		pthread_mutex_lock(&ctx->tasks_done_mutex);
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
 		ctx->tasks_done++;
-		printf("hello taskhandler 2 tasks done: %d\n", ctx->tasks_done);
+		//printf("hello taskhandler 2 tasks done: %d\n", ctx->tasks_done);
 		if (ctx->tasks_done == NUM_TASKS)
 		{
 		//printf("hello taskhandler 2 %d\n", ctx->tasks_done);
@@ -90,7 +90,7 @@ void taskhandler(void *context)
 		}
 		pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 		pthread_mutex_unlock(&ctx->tasks_done_mutex);
-		printf("hello taskhandler 3\n");
+		//printf("hello taskhandler 3\n");
 	}
 }
 

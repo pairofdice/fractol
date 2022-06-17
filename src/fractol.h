@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/16 23:06:19 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 10:27:30 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <time.h>
 
 enum {
-	NUM_THREADS = 3,
-	NUM_TASKS = 64,
+	NUM_THREADS = 2,
+	NUM_TASKS = 32,
 	WIN_W = 666,
 	WIN_H = 666,
 	ON_KEYDOWN = 2,
@@ -140,7 +140,7 @@ typedef struct s_context
 	int				n;
 	int				max_iter;
 	int				pause;
-	pthread_mutex_t	task_mutex;
+	//pthread_mutex_t	task_mutex;
 	pthread_mutex_t	tasks_taken_mutex;
 	pthread_mutex_t	tasks_done_mutex;
 	pthread_mutex_t	frame_start_mutex;
@@ -170,7 +170,6 @@ t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
 t_colors		mandelbrot(t_complex c, int max_iter);
-//void		fractaldraw(t_context *ctx, int task);
 void	fractaldraw(t_context *ctx, int task);
 
 // handle_it
