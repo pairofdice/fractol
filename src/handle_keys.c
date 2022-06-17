@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 23:32:35 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 00:04:06 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int	on_keys_b(int key_nb, t_context *ctx)
 	{
 		ctx->choose_fractal++;
 		ctx->choose_fractal %= NUM_FRACTALS;
+		ctx->SOffsetX = 0;
+		ctx->SOffsetY = 0;
+		ctx->scale = 1;
 	}
 
 /*
@@ -41,7 +44,6 @@ int	on_keys_b(int key_nb, t_context *ctx)
 		else
 			ctx->pause = 0;
 	}
-
 /*
 	if (key_nb == KEY_MB_Z || key_nb == KEY_Z)
 		reset(ctx);
