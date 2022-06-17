@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 23:19:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:25:53 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	taskhandler(void *context)
 
 		//printf("hello taskhandler 4\n");
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		if ( ctx->tasks_taken + ctx->tasks_done  <= NUM_TASKS)
+		if ( ctx->tasks_taken /* + ctx->tasks_done */  < NUM_TASKS)
 		{
 			task_n = ctx->tasks_taken;
 			ctx->tasks_taken++;
@@ -115,13 +115,13 @@ void	fractaldraw(t_context *ctx, int task)
 			{
 				mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
 				mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
-				mouse.x = 0.69;
-				mouse.y = 0.69;
+				mouse.x = 0.42;
+				mouse.y = 0.42;
 			}
 			// t_colors color = mandelbrot(mouse, c, ctx->max_iter);
 			// t_colors color = my_brot(mouse, c, ctx->max_iter);
 			// t_colors color = burning_ship(mouse, c, ctx->max_iter);
-			t_colors color = julia(mouse, c, ctx->max_iter);
+			t_colors color =ctx->fn_ptrs[1](mouse, c, ctx->max_iter);
 
 
 
