@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 23:25:53 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:28:27 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	taskhandler(void *context)
 	{
 		//printf("taskhandler frame_n %d\n", ctx->frame_n);
 		//printf("hello taskhandler 4\n", pt);
-		pthread_mutex_lock(&ctx->tasks_done_mutex);
+		//pthread_mutex_lock(&ctx->tasks_done_mutex);
 		if (ctx->tasks_done == 0)
 		{
-			pthread_mutex_unlock(&ctx->tasks_done_mutex);
+			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			pthread_mutex_lock(&ctx->frame_start_mutex);
 			pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 			pthread_mutex_unlock(&ctx->frame_start_mutex);
-		} else
-			pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		}// else
+		//	pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 
 		//printf("hello taskhandler 4\n");
@@ -43,7 +43,7 @@ void	taskhandler(void *context)
 			ctx->tasks_taken++;
 			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 			fractaldraw(ctx,  task_n);
-		}else
+		} else
 			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 
 		//printf("Task # %d\n", task_n);
@@ -61,15 +61,12 @@ void	taskhandler(void *context)
 
 			pthread_mutex_lock(&ctx->tasks_taken_mutex);
 			ctx->tasks_taken = 0;
-
-			//ctx->tasks_taken = 0;
-
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 			pthread_mutex_lock(&ctx->frame_end_mutex);
 			pthread_cond_broadcast(&ctx->frame_end_cv);
 			pthread_mutex_unlock(&ctx->frame_end_mutex);
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
-			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 		}
 		else {
 			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
