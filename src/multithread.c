@@ -6,43 +6,13 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 22:38:00 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:19:42 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 #include <unistd.h>
-
-/*
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char const *s)
-{
-	if (!s)
-		return ;
-	while (*s)
-		ft_putchar(*s++);
-}
- */
-/*
-
-Complex zMinusPoint = new Complex(z);
-        zMinusPoint = zMinusPoint.subtract(point);
-
-        double zMinusPointDistance = zMinusPoint.magnitude();
-        if (zMinusPointDistance < distance)
-            distance = zMinusPointDistance;
-
- */
-
-double screen_to_world()
-{
-	return (0.0); // ?????
-}
 
 void	taskhandler(void *context)
 {
@@ -67,17 +37,18 @@ void	taskhandler(void *context)
 
 		//printf("hello taskhandler 4\n");
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		if ( ctx->tasks_taken < NUM_TASKS && ctx->tasks_done < NUM_TASKS)
+		if ( ctx->tasks_taken + ctx->tasks_done  <= NUM_TASKS)
 		{
 			task_n = ctx->tasks_taken;
 			ctx->tasks_taken++;
-			ctx->tasks_doing++;
-		}
-		pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			fractaldraw(ctx,  task_n);
+		}else
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+
 		//printf("Task # %d\n", task_n);
 
 		//printf("hello taskhandler 1 %d\n", ctx->tasks_done);
-		fractaldraw(ctx,  task_n);
 	 	pthread_mutex_lock(&ctx->tasks_done_mutex);
 
 
@@ -86,11 +57,12 @@ void	taskhandler(void *context)
 		if (ctx->tasks_done >= NUM_TASKS)
 		{
 			ctx->tasks_done = 0;
-			ctx->tasks_doing--;
 
 
 			pthread_mutex_lock(&ctx->tasks_taken_mutex);
 			ctx->tasks_taken = 0;
+
+			//ctx->tasks_taken = 0;
 
 
 			pthread_mutex_lock(&ctx->frame_end_mutex);
@@ -118,7 +90,7 @@ void	fractaldraw(t_context *ctx, int task)
 	t_complex mouse;
 	int mod;
 	mod = ctx->frame_n % 2 + 1;
-	//mod = 1;
+	mod = 1;
 	y = task * mod;
 	//printf("hello fractaldraw\n");
 	//if (task == 0)
