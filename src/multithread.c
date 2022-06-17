@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 14:51:23 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 22:38:00 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,46 +52,52 @@ void	taskhandler(void *context)
 	ctx = (t_context *) context;
 	while (1)
 	{
+		//printf("taskhandler frame_n %d\n", ctx->frame_n);
 		//printf("hello taskhandler 4\n", pt);
-		// pthread_mutex_lock(&ctx->tasks_done_mutex);
+		pthread_mutex_lock(&ctx->tasks_done_mutex);
 		if (ctx->tasks_done == 0)
 		{
-			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			pthread_mutex_lock(&ctx->frame_start_mutex);
 			pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 			pthread_mutex_unlock(&ctx->frame_start_mutex);
-		} //else
-			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		} else
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 
 		//printf("hello taskhandler 4\n");
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		if ( ctx->tasks_taken < NUM_TASKS)
+		if ( ctx->tasks_taken < NUM_TASKS && ctx->tasks_done < NUM_TASKS)
 		{
 			task_n = ctx->tasks_taken;
 			ctx->tasks_taken++;
+			ctx->tasks_doing++;
 		}
 		pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 		//printf("Task # %d\n", task_n);
 
 		//printf("hello taskhandler 1 %d\n", ctx->tasks_done);
 		fractaldraw(ctx,  task_n);
+	 	pthread_mutex_lock(&ctx->tasks_done_mutex);
 
-		pthread_mutex_lock(&ctx->tasks_done_mutex);
-		pthread_mutex_lock(&ctx->tasks_taken_mutex);
+
 		ctx->tasks_done++;
-		//printf("hello taskhandler 2 tasks done: %d\n", ctx->tasks_done);
-		if (ctx->tasks_done == NUM_TASKS)
+		printf("hello taskhandler - tasks done: %zu\n", ctx->tasks_done);
+		if (ctx->tasks_done >= NUM_TASKS)
 		{
 			ctx->tasks_done = 0;
+			ctx->tasks_doing--;
+
+
+			pthread_mutex_lock(&ctx->tasks_taken_mutex);
 			ctx->tasks_taken = 0;
 
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
-			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 			pthread_mutex_lock(&ctx->frame_end_mutex);
 			pthread_cond_broadcast(&ctx->frame_end_cv);
 			pthread_mutex_unlock(&ctx->frame_end_mutex);
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 		}
 		else {
 			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
@@ -112,7 +118,7 @@ void	fractaldraw(t_context *ctx, int task)
 	t_complex mouse;
 	int mod;
 	mod = ctx->frame_n % 2 + 1;
-
+	//mod = 1;
 	y = task * mod;
 	//printf("hello fractaldraw\n");
 	//if (task == 0)
@@ -133,15 +139,17 @@ void	fractaldraw(t_context *ctx, int task)
 			*/
 			//printf("HEI\n");
 
-			t_colors color = mandelbrot(c, ctx->max_iter);
-			// t_colors color = mandelbrotb(c, ctx->max_iter);
-			//t_colors color = burning_ship(c, ctx->max_iter);
 			if (!ctx->pause)
 			{
 				mouse.x = (ctx->mouse_x - WIN_W/2) /666.0;
 				mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
+				mouse.x = 0.69;
+				mouse.y = 0.69;
 			}
-			//t_colors color = julia(c, mouse, ctx->max_iter);
+			// t_colors color = mandelbrot(mouse, c, ctx->max_iter);
+			// t_colors color = my_brot(mouse, c, ctx->max_iter);
+			// t_colors color = burning_ship(mouse, c, ctx->max_iter);
+			t_colors color = julia(mouse, c, ctx->max_iter);
 
 
 

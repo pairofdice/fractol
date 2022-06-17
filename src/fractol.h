@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 15:51:46 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 22:34:37 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 
 enum {
 	NUM_THREADS = 9,
-	NUM_TASKS = 21,
+	NUM_TASKS = 16,
+	NUM_FRACTALS = 4,
 	WIN_W = 666,
 	WIN_H = 666,
 	ON_KEYDOWN = 2,
@@ -140,6 +141,7 @@ typedef struct s_context
 	int				n;
 	int				max_iter;
 	int				pause;
+	t_complex		screen_xy;
 	//pthread_mutex_t	task_mutex;
 	pthread_mutex_t	tasks_taken_mutex;
 	pthread_mutex_t	tasks_done_mutex;
@@ -149,10 +151,12 @@ typedef struct s_context
 	pthread_cond_t	frame_end_cv;
 	size_t			tasks_done;
 	size_t			tasks_taken;
+	size_t			tasks_doing;
 	pthread_t		threadpool[NUM_THREADS];
 	clock_t			prev;
 	clock_t			curr;
-
+	t_colors		(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c, int max_iter);
+	size_t			choose_fractal;
 }	t_context;
 
 void	init_context(t_context *ctx);
@@ -169,7 +173,10 @@ double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
-t_colors		mandelbrot(t_complex c, int max_iter);
+t_colors		mandelbrot(t_complex sxy, t_complex c, int max_iter);
+t_colors		julia(t_complex sxy, t_complex c, int max_iter);
+t_colors		my_brot(t_complex sxy, t_complex c, int max_iter);
+t_colors		burning_ship(t_complex sxy, t_complex c, int max_iter);
 void	fractaldraw(t_context *ctx, int task);
 
 // handle_it

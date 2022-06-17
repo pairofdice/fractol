@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fractals.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:29:50 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/14 15:44:53 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:49:31 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_colors	mandelbrotb(t_complex c, int max_iter)
+t_colors	my_brot(t_complex sxy, t_complex c, int max_iter)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -55,7 +55,7 @@ t_colors	mandelbrotb(t_complex c, int max_iter)
 }
 
 
-t_colors	mandelbrot(t_complex c, int max_iter)
+t_colors	mandelbrot(t_complex sxy, t_complex c, int max_iter)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -92,7 +92,7 @@ t_colors	mandelbrot(t_complex c, int max_iter)
 	return (colors);
 }
 
-t_colors	burning_ship(t_complex c, int max_iter)
+t_colors	burning_ship(t_complex sxy, t_complex c, int max_iter)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -162,8 +162,8 @@ t_colors	julia(t_complex sxy, t_complex c, int max_iter)
 	while (i < 64 && n < max_iter)
 	{
 		//ft_putstr("HEI");
-c_mult(sxy, sxy);
-c_mult(sxy, sxy);
+		c_mult(sxy, sxy);
+		c_mult(sxy, sxy);
 		sxy = c_add(c_mult(sxy, sxy), c);
 		i = sxy.x * sxy.x + sxy.y * sxy.y;
 

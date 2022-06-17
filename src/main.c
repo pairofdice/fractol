@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 14:25:43 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 22:30:22 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
+	printf("draw_frame frame_n %d\n", ctx->frame_n);
+
+
 
     double cpu_time_used;
     clock_t curr;
@@ -91,11 +94,13 @@ int	draw_frame(t_context *ctx)
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 	//fractaldraw(ctx, ctx->frame_n % NUM_THREADS);
 	pthread_mutex_lock(&ctx->frame_end_mutex);
-	printf("--- hi from render_frame 1\n");
+	// printf("--- hi from render_frame 1\n");
+
 	pthread_cond_wait(&ctx->frame_end_cv,  &ctx->frame_end_mutex);
-	printf("--- hi from render_frame 2\n");
+	// printf("--- hi from render_frame 2\n");
 	pthread_mutex_unlock(&ctx->frame_end_mutex);
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+
 	return (1);
 }
 static void	hook_em_up(t_context *ctx)
