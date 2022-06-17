@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 23:28:27 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:33:25 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	fractaldraw(t_context *ctx, int task)
 			// t_colors color = mandelbrot(mouse, c, ctx->max_iter);
 			// t_colors color = my_brot(mouse, c, ctx->max_iter);
 			// t_colors color = burning_ship(mouse, c, ctx->max_iter);
-			t_colors color =ctx->fn_ptrs[1](mouse, c, ctx->max_iter);
+			t_colors color =ctx->fn_ptrs[ctx->choose_fractal](mouse, c, ctx->max_iter);
 
 
 

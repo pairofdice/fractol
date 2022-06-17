@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 22:35:32 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:33:42 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	init_context(t_context *ctx)
 	ctx->fn_ptrs[1] = julia;
 	ctx->fn_ptrs[2] = my_brot;
 	ctx->fn_ptrs[3] = burning_ship;
+	ctx->choose_fractal = 0;
 
 
 }

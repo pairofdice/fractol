@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/16 17:09:36 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 23:32:35 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ int	on_keys_b(int key_nb, t_context *ctx)
 		ctx->SOffsetY -= 0.1 * ctx->scale;
 	if (key_nb == KEY_MB_D || key_nb == KEY_D)
 		ctx->SOffsetX += 0.1 * ctx->scale;
-/*
 	if (key_nb == KEY_MB_B || key_nb == KEY_B)
-		switch_auto_rotation(ctx);
+	{
+		ctx->choose_fractal++;
+		ctx->choose_fractal %= NUM_FRACTALS;
+	}
+
+/*
 	if (key_nb == KEY_MB_C || key_nb == KEY_C)
 	{
 		ctx->t.color_map++;
