@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 10:10:58 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:51:23 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <unistd.h>
 
-
+/*
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -27,7 +27,7 @@ void	ft_putstr(char const *s)
 	while (*s)
 		ft_putchar(*s++);
 }
-
+ */
 /*
 
 Complex zMinusPoint = new Complex(z);
@@ -44,23 +44,25 @@ double screen_to_world()
 	return (0.0); // ?????
 }
 
-void taskhandler(void *context)
+void	taskhandler(void *context)
 {
-	t_context *ctx;
+	t_context	*ctx;
+	int			task_n;
 
 	ctx = (t_context *) context;
 	while (1)
 	{
-		int task_n;
-		ctx->n++;
-		pthread_mutex_lock(&ctx->tasks_done_mutex);
+		//printf("hello taskhandler 4\n", pt);
+		// pthread_mutex_lock(&ctx->tasks_done_mutex);
 		if (ctx->tasks_done == 0)
 		{
+			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			pthread_mutex_lock(&ctx->frame_start_mutex);
 			pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 			pthread_mutex_unlock(&ctx->frame_start_mutex);
-		}
-		pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		} //else
+			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
+
 
 		//printf("hello taskhandler 4\n");
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
@@ -81,15 +83,20 @@ void taskhandler(void *context)
 		//printf("hello taskhandler 2 tasks done: %d\n", ctx->tasks_done);
 		if (ctx->tasks_done == NUM_TASKS)
 		{
-		//printf("hello taskhandler 2 %d\n", ctx->tasks_done);
-			pthread_mutex_lock(&ctx->frame_end_mutex);
 			ctx->tasks_done = 0;
 			ctx->tasks_taken = 0;
+
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
+
+			pthread_mutex_lock(&ctx->frame_end_mutex);
 			pthread_cond_broadcast(&ctx->frame_end_cv);
 			pthread_mutex_unlock(&ctx->frame_end_mutex);
 		}
-		pthread_mutex_unlock(&ctx->tasks_taken_mutex);
-		pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		else {
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		}
 		//printf("hello taskhandler 3\n");
 	}
 }
@@ -103,8 +110,10 @@ void	fractaldraw(t_context *ctx, int task)
 	double	color;
 	t_complex c;
 	t_complex mouse;
+	int mod;
+	mod = ctx->frame_n % 2 + 1;
 
-	y = task;
+	y = task * mod;
 	//printf("hello fractaldraw\n");
 	//if (task == 0)
 	{
@@ -142,7 +151,7 @@ void	fractaldraw(t_context *ctx, int task)
 				125 + sin(0.563/ (color.b + 0.004) + ctx->frame_n / 17.0) * 125/* 200- color*80 */}));
 			x++;
 		}
-		y += NUM_TASKS;
+		y += NUM_TASKS * mod;
 	}
 	}
 

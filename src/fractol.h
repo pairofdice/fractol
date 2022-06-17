@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 10:27:30 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:51:46 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <time.h>
 
 enum {
-	NUM_THREADS = 2,
-	NUM_TASKS = 32,
+	NUM_THREADS = 9,
+	NUM_TASKS = 21,
 	WIN_W = 666,
 	WIN_H = 666,
 	ON_KEYDOWN = 2,

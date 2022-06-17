@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 09:35:43 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:24:53 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_context(t_context *ctx)
 	ctx->max_iter = 80;
 	ctx->pause = 0;
 	ctx->n = 0;
+
 	ctx->tasks_done = 0;
 	ctx->tasks_taken = 0;
 
