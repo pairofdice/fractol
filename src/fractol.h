@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 16:43:49 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 18:15:40 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_context
 	pthread_mutex_t	frame_end_mutex;
 	pthread_cond_t	frame_start_cv;
 	pthread_cond_t	frame_end_cv;
+	pthread_cond_t	tasks_done_cv;
 	size_t			tasks_done;
 	size_t			tasks_taken;
 	size_t			tasks_doing;
