@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 22:30:22 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 11:14:32 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ int	draw_frame(t_context *ctx)
 
 	//printf("-- Frame # %d\n", ctx->frame_n);
 
-	pthread_mutex_lock(&ctx->frame_start_mutex);
+ 	pthread_mutex_lock(&ctx->frame_start_mutex);
 	pthread_cond_broadcast(&ctx->frame_start_cv);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
+
 	//fractaldraw(ctx, ctx->frame_n % NUM_THREADS);
 	pthread_mutex_lock(&ctx->frame_end_mutex);
 	// printf("--- hi from render_frame 1\n");

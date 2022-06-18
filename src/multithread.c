@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 00:32:06 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:22:11 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,24 @@ void	taskhandler(void *context)
 		//printf("Task # %d\n", task_n);
 
 		//printf("hello taskhandler 1 %d\n", ctx->tasks_done);
-	 	pthread_mutex_lock(&ctx->tasks_done_mutex);
 
+		pthread_mutex_lock(&ctx->tasks_taken_mutex);
 		ctx->tasks_done++;
 		printf("hello taskhandler - tasks done: %zu\n", ctx->tasks_done);
-		if (ctx->tasks_done >= NUM_TASKS)
+		if (ctx->tasks_taken >= NUM_TASKS)
 		{
+	 	pthread_mutex_lock(&ctx->tasks_done_mutex);
 			ctx->tasks_done = 0;
 
 
-			pthread_mutex_lock(&ctx->tasks_taken_mutex);
-			ctx->tasks_taken = 0;
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 
 			// we should now have NUM_TASKS amount of work done
 			// so we signal for render_frame to put image to screen
 			// maybe we should also make threads wait here?????
+			ctx->tasks_taken = 0;
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 			pthread_mutex_lock(&ctx->frame_end_mutex);
 			pthread_cond_broadcast(&ctx->frame_end_cv);
 			pthread_mutex_unlock(&ctx->frame_end_mutex);
