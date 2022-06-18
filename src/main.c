@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 11:14:32 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 17:15:18 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
-	printf("draw_frame frame_n %d\n", ctx->frame_n);
+	//printf("draw_frame frame_n %d\n", ctx->frame_n);
 
 
 
@@ -90,7 +90,9 @@ int	draw_frame(t_context *ctx)
 	//printf("-- Frame # %d\n", ctx->frame_n);
 
  	pthread_mutex_lock(&ctx->frame_start_mutex);
+
 	pthread_cond_broadcast(&ctx->frame_start_cv);
+	printf("task taken %zu\n", ctx->tasks_taken);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 
 	//fractaldraw(ctx, ctx->frame_n % NUM_THREADS);
@@ -110,6 +112,7 @@ static void	hook_em_up(t_context *ctx)
 	mlx_hook(ctx->win, ON_KEYDOWN, 1L << 0, on_keypress, ctx);
 	mlx_hook(ctx->win, ON_DESTROY, 0, fdf_close, ctx);
 	mlx_hook(ctx->win, ON_MOUSEDOWN, 0, on_mouse_down, ctx);
+	mlx_hook(ctx->win, ON_MOUSEMOVE, 0, on_mouse_move, ctx);
 	mlx_hook(ctx->win, ON_MOUSEUP, 0, on_mouse_up, ctx);
 }
 

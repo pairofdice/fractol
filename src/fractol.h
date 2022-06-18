@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 22:34:37 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 16:43:49 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-//# include "mlx.h"
-# include "../minilibx/mlx.h"
+# include "mlx.h"
+//# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
