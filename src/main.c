@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 21:42:22 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/19 01:38:03 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 	p->x = x * cos(rotation) - y * sin(rotation);
 	p->y = y * cos(rotation) + x * sin(rotation);
 }
-/* 
+/*
 int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
@@ -119,7 +119,11 @@ int	draw_frame(t_context *ctx)
 	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
 	printf("%f\n", 1/cpu_time_used);
 	ctx->prev = clock();
+ 	pthread_mutex_lock(&ctx->frame_start_mutex);
+	pthread_cond_broadcast(&ctx->frame_start_cv);
+	pthread_mutex_unlock(&ctx->frame_start_mutex);
 
+	printf("tasks: %zu \n", ctx->tasks);
 	pthread_mutex_lock(&ctx->tasks_mutex);
 	ctx->tasks = NUM_TASKS;
 	pthread_mutex_unlock(&ctx->tasks_mutex);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multithread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 21:12:17 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/19 01:38:01 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	taskhandler(void *context)
 	ctx = (t_context *) context;
 	while (1)
 	{
+ 		pthread_mutex_lock(&ctx->frame_start_mutex);
+		pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
+		pthread_mutex_unlock(&ctx->frame_start_mutex);
 		pthread_mutex_lock(&ctx->tasks_mutex);
 		if (ctx->tasks > 0)
 		{
@@ -29,7 +32,7 @@ void	taskhandler(void *context)
 			pthread_mutex_unlock(&ctx->tasks_mutex);
 			fractaldraw(ctx,  task_n);
 			pthread_mutex_lock(&ctx->tasks_mutex);
-			if (ctx->tasks == 0)
+			if (ctx->tasks <= 0)
 			{
 				pthread_mutex_unlock(&ctx->tasks_mutex);
 				pthread_mutex_lock(&ctx->tasks_done_mutex);
@@ -37,7 +40,7 @@ void	taskhandler(void *context)
 				pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			} else
 				pthread_mutex_unlock(&ctx->tasks_mutex);
-		} else
+		}  else
 		{
 			pthread_mutex_unlock(&ctx->tasks_mutex);
 			pthread_mutex_lock(&ctx->tasks_done_mutex);
