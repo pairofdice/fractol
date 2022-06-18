@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/17 23:33:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:28:34 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	init_context(t_context *ctx)
 	ctx->tasks_done = 0;
 	ctx->tasks_taken = 0;
 	ctx->tasks_doing = 0;
+	ctx->tasks = 0;
 
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float)WIN_H/(float)WIN_W;

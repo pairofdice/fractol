@@ -6,15 +6,49 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 17:07:37 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 21:12:17 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 #include <unistd.h>
-
 void	taskhandler(void *context)
+{
+	t_context	*ctx;
+	int			task_n;
+
+	ctx = (t_context *) context;
+	while (1)
+	{
+		pthread_mutex_lock(&ctx->tasks_mutex);
+		if (ctx->tasks > 0)
+		{
+			ctx->tasks--;
+			task_n = ctx->tasks;
+			pthread_mutex_unlock(&ctx->tasks_mutex);
+			fractaldraw(ctx,  task_n);
+			pthread_mutex_lock(&ctx->tasks_mutex);
+			if (ctx->tasks == 0)
+			{
+				pthread_mutex_unlock(&ctx->tasks_mutex);
+				pthread_mutex_lock(&ctx->tasks_done_mutex);
+				pthread_cond_broadcast(&ctx->tasks_done_cv);
+				pthread_mutex_unlock(&ctx->tasks_done_mutex);
+			} else
+				pthread_mutex_unlock(&ctx->tasks_mutex);
+		} else
+		{
+			pthread_mutex_unlock(&ctx->tasks_mutex);
+			pthread_mutex_lock(&ctx->tasks_done_mutex);
+			pthread_cond_wait(&ctx->tasks_done_cv, &ctx->tasks_done_mutex);
+			pthread_mutex_unlock(&ctx->tasks_done_mutex);
+		}
+
+	}
+}
+
+/* void	taskhandler(void *context)
 {
 	t_context	*ctx;
 	int			task_n;
@@ -24,18 +58,18 @@ void	taskhandler(void *context)
 	{
 		//printf("taskhandler frame_n %d\n", ctx->frame_n);
 		//printf("hello taskhandler 4\n", pt);
-		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		if (ctx->tasks_taken == 0)
+		//pthread_mutex_lock(&ctx->tasks_done_mutex);
+		if (ctx->tasks_done == 0)
 		{
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+			//pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 			// Make threads wait until the start of the frame
 			// render_frame will signal on frame_start_cv
 			pthread_mutex_lock(&ctx->frame_start_mutex);
 			pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 			pthread_mutex_unlock(&ctx->frame_start_mutex);
-		} else
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+		}// else
+		//	pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 
 		//printf("hello taskhandler 4\n");
@@ -43,7 +77,7 @@ void	taskhandler(void *context)
 		// attempt to only get the proper amount of work to do
 		// broken
 		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		if ( ctx->tasks_taken /*  + ctx->tasks_done -1  */  < NUM_TASKS)
+		if ( ctx->tasks_taken  <= NUM_TASKS)
 		{
 			task_n = ctx->tasks_taken;
 			ctx->tasks_taken++;
@@ -55,24 +89,24 @@ void	taskhandler(void *context)
 		//printf("Task # %d\n", task_n);
 
 		//printf("hello taskhandler 1 %d\n", ctx->tasks_done);
-
-		pthread_mutex_lock(&ctx->tasks_taken_mutex);
-		ctx->tasks_done++;
-		//printf("hello taskhandler - tasks done: %zu\n", ctx->tasks_done);
-		if (ctx->tasks_taken >= NUM_TASKS)
-		{
 	 	pthread_mutex_lock(&ctx->tasks_done_mutex);
+
+		ctx->tasks_done++;
+		printf("hello taskhandler - tasks done: %zu\n", ctx->tasks_done);
+		if (ctx->tasks_done >= NUM_TASKS)
+		{
 			ctx->tasks_done = 0;
 
 
+			pthread_mutex_lock(&ctx->tasks_taken_mutex);
+			ctx->tasks_taken = 0;
+			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 			pthread_mutex_unlock(&ctx->tasks_done_mutex);
 
 
 			// we should now have NUM_TASKS amount of work done
 			// so we signal for render_frame to put image to screen
 			// maybe we should also make threads wait here?????
-			ctx->tasks_taken = 0;
-			pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 			pthread_mutex_lock(&ctx->frame_end_mutex);
 			pthread_cond_broadcast(&ctx->frame_end_cv);
 			pthread_mutex_unlock(&ctx->frame_end_mutex);
@@ -84,7 +118,7 @@ void	taskhandler(void *context)
 		//printf("hello taskhandler 3\n");
 	}
 }
-
+ */
 void	fractaldraw(t_context *ctx, int task)
 {
 	int	y;

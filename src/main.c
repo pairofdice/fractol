@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 17:15:18 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/18 21:42:22 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void rotate_around(t_point *p, t_point pivot, t_context *ctx)
 	p->x = x * cos(rotation) - y * sin(rotation);
 	p->y = y * cos(rotation) + x * sin(rotation);
 }
-
-
+/* 
 int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
@@ -103,6 +102,35 @@ int	draw_frame(t_context *ctx)
 	// printf("--- hi from render_frame 2\n");
 	pthread_mutex_unlock(&ctx->frame_end_mutex);
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+
+	return (1);
+}
+ */
+int	draw_frame(t_context *ctx)
+{
+	ctx->frame_n++;
+	//printf("draw_frame frame_n %d\n", ctx->frame_n);
+
+
+
+    double cpu_time_used;
+    clock_t curr;
+	curr = clock();
+	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
+	printf("%f\n", 1/cpu_time_used);
+	ctx->prev = clock();
+
+	pthread_mutex_lock(&ctx->tasks_mutex);
+	ctx->tasks = NUM_TASKS;
+	pthread_mutex_unlock(&ctx->tasks_mutex);
+
+	//printf("--- hi from render_frame 2\n");
+	pthread_mutex_lock(&ctx->tasks_done_mutex);
+	pthread_cond_wait(&ctx->tasks_done_cv, &ctx->tasks_done_mutex);
+	pthread_mutex_unlock(&ctx->tasks_done_mutex);
+	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+
+
 
 	return (1);
 }
