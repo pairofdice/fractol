@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/18 23:01:36 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:22:29 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_context
 	pthread_cond_t	frame_end_cv;
 	pthread_cond_t	tasks_done_cv;
 	size_t			tasks_done;
-	size_t			tasks;
+	int			tasks;
 	size_t			tasks_taken;
 	size_t			tasks_doing;
 	pthread_t		threadpool[NUM_THREADS];

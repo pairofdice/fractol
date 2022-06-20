@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/19 01:38:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/20 10:42:45 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,40 @@ void	taskhandler(void *context)
 	ctx = (t_context *) context;
 	while (1)
 	{
+		printf("Tasks outside: %d\n", ctx->tasks);
  		pthread_mutex_lock(&ctx->frame_start_mutex);
 		pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
+		printf("Tasks after waiting: %d\n", ctx->tasks);
 		pthread_mutex_unlock(&ctx->frame_start_mutex);
+
 		pthread_mutex_lock(&ctx->tasks_mutex);
 		if (ctx->tasks > 0)
 		{
 			ctx->tasks--;
+			printf("Tasks: %d\n", ctx->tasks);
 			task_n = ctx->tasks;
 			pthread_mutex_unlock(&ctx->tasks_mutex);
+
 			fractaldraw(ctx,  task_n);
+
 			pthread_mutex_lock(&ctx->tasks_mutex);
 			if (ctx->tasks <= 0)
 			{
 				pthread_mutex_unlock(&ctx->tasks_mutex);
+
 				pthread_mutex_lock(&ctx->tasks_done_mutex);
 				pthread_cond_broadcast(&ctx->tasks_done_cv);
 				pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			} else
+			//printf("Unlocking\n");
+
 				pthread_mutex_unlock(&ctx->tasks_mutex);
 		}  else
 		{
+			printf("Tasks ELSE: %d\n", ctx->tasks);
+
 			pthread_mutex_unlock(&ctx->tasks_mutex);
+
 			pthread_mutex_lock(&ctx->tasks_done_mutex);
 			pthread_cond_wait(&ctx->tasks_done_cv, &ctx->tasks_done_mutex);
 			pthread_mutex_unlock(&ctx->tasks_done_mutex);
