@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/20 10:43:03 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/21 07:38:35 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	draw_frame(t_context *ctx)
 	printf("%f\n", 1/cpu_time_used);
 	ctx->prev = clock();
 
-
  	pthread_mutex_lock(&ctx->frame_start_mutex);
 	pthread_mutex_lock(&ctx->tasks_mutex);
 	ctx->tasks = NUM_TASKS;
@@ -128,12 +127,12 @@ int	draw_frame(t_context *ctx)
 	pthread_cond_broadcast(&ctx->frame_start_cv);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 
-
 	//printf("--- hi from render_frame 2\n");
-	pthread_mutex_lock(&ctx->tasks_done_mutex);
-	printf("tasks in before put_image: %d \n", ctx->tasks);
-	pthread_cond_wait(&ctx->tasks_done_cv, &ctx->tasks_done_mutex);
-	pthread_mutex_unlock(&ctx->tasks_done_mutex);
+	pthread_mutex_lock(&ctx->frame_end_mutex);
+	pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
+	printf("Tasks after waiting: %d\n", ctx->tasks);
+	pthread_mutex_unlock(&ctx->frame_end_mutex);
+
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
 	return (1);
 }
