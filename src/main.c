@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/26 01:09:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/27 15:39:01 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,15 @@ int	draw_frame(t_context *ctx)
 	ctx->prev = clock();
 
 	printf("HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
-	pthread_mutex_lock(&ctx->tasks_mutex);
+	pthread_mutex_lock(&ctx->tasks_taken_mutex);
 	ctx->tasks_taken = 0;
-	pthread_mutex_unlock(&ctx->tasks_mutex);
- 	pthread_mutex_lock(&ctx->frame_start_mutex);
+	pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+	pthread_mutex_lock(&ctx->tasks_done_mutex);
 	ctx->tasks_done = 0;
+	pthread_mutex_unlock(&ctx->tasks_done_mutex);
 	printf("HERE HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 
+ 	pthread_mutex_lock(&ctx->frame_start_mutex);
 	pthread_cond_broadcast(&ctx->frame_start_cv);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 
