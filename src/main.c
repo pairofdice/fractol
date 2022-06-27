@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/21 07:38:35 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:09:01 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,17 +120,21 @@ int	draw_frame(t_context *ctx)
 	printf("%f\n", 1/cpu_time_used);
 	ctx->prev = clock();
 
- 	pthread_mutex_lock(&ctx->frame_start_mutex);
+	printf("HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 	pthread_mutex_lock(&ctx->tasks_mutex);
-	ctx->tasks = NUM_TASKS;
+	ctx->tasks_taken = 0;
 	pthread_mutex_unlock(&ctx->tasks_mutex);
+ 	pthread_mutex_lock(&ctx->frame_start_mutex);
+	ctx->tasks_done = 0;
+	printf("HERE HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+
 	pthread_cond_broadcast(&ctx->frame_start_cv);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 
 	//printf("--- hi from render_frame 2\n");
 	pthread_mutex_lock(&ctx->frame_end_mutex);
 	pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
-	printf("Tasks after waiting: %d\n", ctx->tasks);
+	printf("Tasks after waiting: %zu\n", ctx->tasks_done);
 	pthread_mutex_unlock(&ctx->frame_end_mutex);
 
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
@@ -140,10 +144,17 @@ static void	hook_em_up(t_context *ctx)
 {
 	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
 	mlx_hook(ctx->win, ON_KEYDOWN, 1L << 0, on_keypress, ctx);
-	mlx_hook(ctx->win, ON_DESTROY, 0, fdf_close, ctx);
 	mlx_hook(ctx->win, ON_MOUSEDOWN, 0, on_mouse_down, ctx);
 	mlx_hook(ctx->win, ON_MOUSEMOVE, 0, on_mouse_move, ctx);
 	mlx_hook(ctx->win, ON_MOUSEUP, 0, on_mouse_up, ctx);
+	mlx_hook(ctx->win, ON_DESTROY, 0, fdf_close, ctx);
+
+	/*
+	mlx_hook(window->win, 2, 0x01, keyboard_key_press, window);
+    mlx_hook(window->win, 4, 0x04, mouse_button_press, window);
+    mlx_hook(window->win, 6, 0x40, mouse_motion_notify, window);
+    mlx_hook(window->win, 17, 0x00, window_close, window);
+	*/
 }
 
 int	main(/* int argc, char **argv */)
