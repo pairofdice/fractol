@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/21 01:11:04 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:44:58 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define FRACTOL_H
 
 # include <stdio.h>
-//# include "mlx.h"
-# include "../minilibx/mlx.h"
+# include "mlx.h"
+//# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
@@ -23,11 +23,11 @@
 #include <time.h>
 
 enum {
-	NUM_THREADS = 5,
-	NUM_TASKS = 11,
+	NUM_THREADS = 9,
+	NUM_TASKS = 21,
 	NUM_FRACTALS = 4,
-	WIN_W = 666,
-	WIN_H = 666,
+	WIN_W = 1666,
+	WIN_H = 966,
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_MOUSEDOWN = 4,
