@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/21 14:45:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/27 12:50:37 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,54 @@ void	taskhandler(void *context)
 	ctx = (t_context *) context;
 	while (1)
 	{
-		//printf("Tasks outside: %d\n", ctx->tasks);
  		pthread_mutex_lock(&ctx->frame_start_mutex);
 		pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
-		//printf("Tasks after waiting: %d\n", ctx->tasks);
 		pthread_mutex_unlock(&ctx->frame_start_mutex);
 		while (1)
 		{
-			pthread_mutex_lock(&ctx->tasks_mutex);
-			if (ctx->tasks == 0)
+			//printf("Task taken: %zu\n", ctx->tasks_taken);
+ 			pthread_mutex_lock(&ctx->tasks_taken_mutex);
+			printf("TASKS: %zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+			if (ctx->tasks_taken >= NUM_TASKS)
 			{
-				pthread_mutex_unlock(&ctx->tasks_mutex);
+				printf("Tasks taken pre-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+ 				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+
 				pthread_mutex_lock(&ctx->frame_end_mutex);
 				pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
-				//printf("WORKER WAITING WHY???: %d\n", ctx->tasks);
 				pthread_mutex_unlock(&ctx->frame_end_mutex);
+
+				printf("Tasks taken POST-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 				break ;
 			} else
 			{
-				printf("DOIN WORK: %d\n", ctx->tasks);
-				ctx->tasks--;
-				task_n = ctx->tasks;
-				pthread_mutex_unlock(&ctx->tasks_mutex);
+				printf("Task pre done: %zu\n", ctx->tasks_done);
+				task_n = ctx->tasks_taken;
+				ctx->tasks_taken++;
+ 				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+
 				fractaldraw(ctx,  task_n);
-				pthread_mutex_lock(&ctx->tasks_mutex);
-				if (ctx->tasks <= 0)
+				pthread_mutex_lock(&ctx->tasks_done_mutex);
+				ctx->tasks_done++;
+				printf("Task post done: %zu\n", ctx->tasks_done);
+				if (ctx->tasks_done >= NUM_TASKS)
 				{
-					pthread_mutex_unlock(&ctx->tasks_mutex);
+					printf("Tasks DONE pre-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+					pthread_mutex_unlock(&ctx->tasks_done_mutex);
+
 					pthread_mutex_lock(&ctx->frame_end_mutex);
 					pthread_cond_broadcast(&ctx->frame_end_cv);
-					//printf("WORKER WAITING WHY???: %d\n", ctx->tasks);
 					pthread_mutex_unlock(&ctx->frame_end_mutex);
+					printf("Tasks DONE POST-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+
 					break ;
-				}
+
+				} else
+					pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			}
 		}
 	}
 }
-
 void	fractaldraw(t_context *ctx, int task)
 {
 	int	y;

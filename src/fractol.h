@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/21 14:44:58 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/27 12:50:26 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <time.h>
 
 enum {
-	NUM_THREADS = 9,
+	NUM_THREADS = 5,
 	NUM_TASKS = 21,
 	NUM_FRACTALS = 4,
 	WIN_W = 1666,
@@ -152,7 +152,7 @@ typedef struct s_context
 	pthread_cond_t	frame_end_cv;
 	pthread_cond_t	tasks_done_cv;
 	size_t			tasks_done;
-	int			tasks;
+	int				task;
 	size_t			tasks_taken;
 	size_t			tasks_doing;
 	pthread_t		threadpool[NUM_THREADS];
