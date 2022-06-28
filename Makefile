@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaarine <jsaarine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/06/16 17:11:06 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/06/28 14:29:29 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ S = src/
 SRC = 	$Smain.c \
 		$Sinit.c \
 		$Sfractals.c \
-		$Sbounds_checks.c \
 		$Spixel_put_color.c \
 		$Scomplex.c \
 		$Smultithread.c \

@@ -6,28 +6,26 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/27 12:53:27 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:33:48 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <stdio.h>
 # include "mlx.h"
 //# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
 
-#include <time.h>
 
 enum {
 	NUM_THREADS = 9,
-	NUM_TASKS = 31,
+	NUM_TASKS = 29,
 	NUM_FRACTALS = 4,
-	WIN_W = 1666,
-	WIN_H = 966,
+	WIN_W = 999,
+	WIN_H = 999,
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_MOUSEDOWN = 4,
@@ -35,7 +33,6 @@ enum {
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 33,
-	//Y_OFFSET = 31868,
 	Y_OFFSET = 32102,
 	KEY_MB_ESC = 65307,
 	KEY_MB_W = 119,
@@ -75,10 +72,15 @@ enum {
 
 typedef struct s_complex
 {
-	double x;
-	double y;
+	long double x;
+	long double y;
 }	t_complex;
 
+typedef struct s_ci
+{
+	t_complex	z;
+	int			i;
+}	t_ci;
 
 typedef struct s_colors
 {
@@ -94,22 +96,6 @@ typedef struct s_colors
 	double	c;
 } t_point;
 
-/* typedef struct s_deltas
-{
-	double	x;
-	double	y;
-	double	z;
-	double	r;
-	double	g;
-	double	b;
-}	t_deltas; */
-
-/* typedef struct s_line
-{
-	t_point	a;
-	t_point	b;
-}	t_line;
- */
 typedef struct s_frame_buffer
 {
 	void	*img;
@@ -163,9 +149,6 @@ typedef struct s_context
 }	t_context;
 
 void	init_context(t_context *ctx);
-/* void	draw_line(t_line *line, t_context *ctx);
-int	neither_point_in_window(t_line *l, t_context *ctx);
-int	points_in_window(t_line *l, t_context *ctx); */
 
 void	img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 void	checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
@@ -192,9 +175,10 @@ int	on_mouse_up(int button, int x, int y, t_context *ctx);
 int	on_keys_a(int key_nb, t_context *ctx);
 int	on_keys_b(int key_nb, t_context *ctx);
 
-void	zoom_to_mouse(t_context *ctx, double in_out);
-double ft_fabs(double n);
-void taskhandler(void *ctx);
+void		zoom_to_mouse(t_context *ctx, double in_out);
+double		ft_fabs(double n);
+void		taskhandler(void *ctx);
+t_colors	fractal_base(t_complex sxy, t_complex c, int max_iter);
 
 
 #endif

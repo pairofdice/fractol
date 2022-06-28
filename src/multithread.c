@@ -6,13 +6,12 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/27 12:53:28 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:34:21 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-#include <unistd.h>
 void	taskhandler(void *context)
 {
 	t_context	*ctx;
@@ -26,43 +25,29 @@ void	taskhandler(void *context)
 		pthread_mutex_unlock(&ctx->frame_start_mutex);
 		while (1)
 		{
-			//printf("Task taken: %zu\n", ctx->tasks_taken);
  			pthread_mutex_lock(&ctx->tasks_taken_mutex);
-			printf("TASKS: %zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 			if (ctx->tasks_taken >= NUM_TASKS)
 			{
-				printf("Tasks taken pre-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
  				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
-
-				pthread_mutex_lock(&ctx->frame_end_mutex);
-				pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
-				pthread_mutex_unlock(&ctx->frame_end_mutex);
-
-				printf("Tasks taken POST-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
+				pthread_mutex_lock(&ctx->frame_start_mutex);
+				pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
+				pthread_mutex_unlock(&ctx->frame_start_mutex);
 				break ;
 			} else
 			{
-				printf("Task pre done: %zu\n", ctx->tasks_done);
 				task_n = ctx->tasks_taken;
 				ctx->tasks_taken++;
  				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
-
 				fractaldraw(ctx,  task_n);
 				pthread_mutex_lock(&ctx->tasks_done_mutex);
 				ctx->tasks_done++;
-				printf("Task post done: %zu\n", ctx->tasks_done);
 				if (ctx->tasks_done >= NUM_TASKS)
 				{
-					printf("Tasks DONE pre-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 					pthread_mutex_unlock(&ctx->tasks_done_mutex);
-
 					pthread_mutex_lock(&ctx->frame_end_mutex);
 					pthread_cond_broadcast(&ctx->frame_end_cv);
 					pthread_mutex_unlock(&ctx->frame_end_mutex);
-					printf("Tasks DONE POST-wait:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
-
 					break ;
-
 				} else
 					pthread_mutex_unlock(&ctx->tasks_done_mutex);
 			}
@@ -80,12 +65,8 @@ void	fractaldraw(t_context *ctx, int task)
 	t_complex mouse;
 	int mod;
 	mod = ctx->frame_n % 2 + 1;
-	mod = 1;
 	y = task * mod;
-	//printf("hello fractaldraw\n");
-	//if (task == 0)
 	{
-
 	while (y < WIN_H)
 	{
 		x = 0;
@@ -111,8 +92,9 @@ void	fractaldraw(t_context *ctx, int task)
 			// t_colors color = mandelbrot(mouse, c, ctx->max_iter);
 			// t_colors color = my_brot(mouse, c, ctx->max_iter);
 			// t_colors color = burning_ship(mouse, c, ctx->max_iter);
-			t_colors color =ctx->fn_ptrs[ctx->choose_fractal](mouse, c, ctx->max_iter);
 
+			t_colors color =ctx->fn_ptrs[ctx->choose_fractal](mouse, c, ctx->max_iter);
+			//  t_colors =	fractal_base(t_complex sxy, t_complex c, int max_iter)
 
 
 			img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){

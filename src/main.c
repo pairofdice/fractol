@@ -6,190 +6,55 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/27 15:39:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:26:26 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-
-int	rgb_to_int(t_point c)
-{
-	return ((int)c.x << 16 | (int)c.y << 8 | (int)c.z);
-}
-
-void	colorslide(t_frame_buffer *fb)
-{
-	int	y;
-	int	x;
-	int	xc;
-	int	yc;
-
-	y = 0;
-	while (y < WIN_H)
-	{
-		x = 0;
-		while (x < WIN_W)
-		{
-			xc = (float)x / (float)WIN_W * 60;
-			yc = (float)y / (float)WIN_H * 60;
-			img_pixel_put(fb, x, y,
-				rgb_to_int((t_point){xc + 10, yc + 10, 10
-					+ (float)(xc + yc) / (float)2, 0}));
-			x++;
-		}
-		y++;
-	}
-}
-
-
-
-double	lerp(a, b, t)
-{
-	return ((1 - t) * a + b);
-}
-
-double	eerp(a, b, t)
-{
-	return (a^(1 - t) * b^t);
-}
-
-
-void rotate_around(t_point *p, t_point pivot, t_context *ctx)
-{
-	double x;
-	double y;
-	float	rotation;
-
-
-	rotation = ctx->frame_n / 1000.0;
-	x = p->x;
-	y = p->y;
-	pivot.x++;
-
-	p->x = x * cos(rotation) - y * sin(rotation);
-	p->y = y * cos(rotation) + x * sin(rotation);
-}
-/*
+	 #include <time.h>
+	 #include <stdio.h>
 int	draw_frame(t_context *ctx)
 {
+	clock_t		start_time;
+
+	start_time	= clock();
 	ctx->frame_n++;
-	//printf("draw_frame frame_n %d\n", ctx->frame_n);
-
-
-
-    double cpu_time_used;
-    clock_t curr;
-	curr = clock();
-	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
-	printf("%f\n", 1/cpu_time_used);
-	ctx->prev = clock();
-
-
-	//printf("-- Frame # %d\n", ctx->frame_n);
-
- 	pthread_mutex_lock(&ctx->frame_start_mutex);
-
-	pthread_cond_broadcast(&ctx->frame_start_cv);
-	printf("task taken %zu\n", ctx->tasks_taken);
-	pthread_mutex_unlock(&ctx->frame_start_mutex);
-
-	//fractaldraw(ctx, ctx->frame_n % NUM_THREADS);
-	pthread_mutex_lock(&ctx->frame_end_mutex);
-	// printf("--- hi from render_frame 1\n");
-
-	pthread_cond_wait(&ctx->frame_end_cv,  &ctx->frame_end_mutex);
-	// printf("--- hi from render_frame 2\n");
-	pthread_mutex_unlock(&ctx->frame_end_mutex);
-	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
-
-	return (1);
-}
- */
-int	draw_frame(t_context *ctx)
-{
-	ctx->frame_n++;
-	//printf("draw_frame frame_n %d\n", ctx->frame_n);
-
-
-
-    double cpu_time_used;
-    clock_t curr;
-	curr = clock();
-	cpu_time_used = ((double)(curr - ctx->prev)) / CLOCKS_PER_SEC;
-	printf("%f\n", 1/cpu_time_used);
-	ctx->prev = clock();
-
-	printf("HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
 	pthread_mutex_lock(&ctx->tasks_taken_mutex);
 	ctx->tasks_taken = 0;
+	ctx->tasks_done = 0;
 	pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 	pthread_mutex_lock(&ctx->tasks_done_mutex);
-	ctx->tasks_done = 0;
 	pthread_mutex_unlock(&ctx->tasks_done_mutex);
-	printf("HERE HERE:%zu %zu\n", ctx->tasks_done, ctx->tasks_taken);
-
- 	pthread_mutex_lock(&ctx->frame_start_mutex);
+	pthread_mutex_lock(&ctx->frame_start_mutex);
 	pthread_cond_broadcast(&ctx->frame_start_cv);
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
-
-	//printf("--- hi from render_frame 2\n");
 	pthread_mutex_lock(&ctx->frame_end_mutex);
 	pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
-	printf("Tasks after waiting: %zu\n", ctx->tasks_done);
 	pthread_mutex_unlock(&ctx->frame_end_mutex);
-
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
+	double cpu_time_used;
+	cpu_time_used = ((double)(clock() -start_time)) / CLOCKS_PER_SEC;
+	printf("%f\n", cpu_time_used);
 	return (1);
 }
+
 static void	hook_em_up(t_context *ctx)
 {
-	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
 	mlx_hook(ctx->win, ON_KEYDOWN, 1L << 0, on_keypress, ctx);
-	mlx_hook(ctx->win, ON_MOUSEDOWN, 0, on_mouse_down, ctx);
-	mlx_hook(ctx->win, ON_MOUSEMOVE, 0, on_mouse_move, ctx);
+	mlx_hook(ctx->win, ON_MOUSEDOWN, 0x04, on_mouse_down, ctx);
+	mlx_hook(ctx->win, ON_MOUSEMOVE, 0x40, on_mouse_move, ctx);
 	mlx_hook(ctx->win, ON_MOUSEUP, 0, on_mouse_up, ctx);
 	mlx_hook(ctx->win, ON_DESTROY, 0, fdf_close, ctx);
-
-	/*
-	mlx_hook(window->win, 2, 0x01, keyboard_key_press, window);
-    mlx_hook(window->win, 4, 0x04, mouse_button_press, window);
-    mlx_hook(window->win, 6, 0x40, mouse_motion_notify, window);
-    mlx_hook(window->win, 17, 0x00, window_close, window);
-	*/
+	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
 }
 
 int	main(/* int argc, char **argv */)
 {
 	t_context	ctx;
-	t_complex	a;
-	t_complex	b;
-	t_complex	res;
-
-	a.x = 3;
-	a.y = 2;
-	b.x = 3;
-	b.y = 2;
-
-	res = c_mult(a, b);
-	/* printf("%f %f", res.x, res.y); */
-
-
 
 	init_context(&ctx);
-	// handle_args(argc, argv, &ctx);
-	//colorslide(&ctx.fb);
-	//mlx_loop_hook(ctx.mlx, draw_frame, &ctx);
-	colorslide(&ctx.fb);
-	mlx_put_image_to_window(ctx.mlx, ctx.win, ctx.fb.img, 0, 0);
-
-	// fractaldraw(&ctx, 0);
-
-	//taskhandler(&ctx);
-
-
 	hook_em_up(&ctx);
 	mlx_loop(ctx.mlx);
-
 	return (0);
 }
