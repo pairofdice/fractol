@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 18:24:05 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:31:25 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_context(t_context *ctx)
 	ctx->scale = 1;
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;
-	ctx->max_iter = 120;
+	ctx->max_iter = 333;
 	ctx->pause = 0;
 	ctx->n = 0;
 	ctx->tasks_done = 0;

@@ -6,11 +6,12 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 18:34:21 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:10:12 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <stdio.h>
 
 void	taskhandler(void *context)
 {
@@ -20,29 +21,36 @@ void	taskhandler(void *context)
 	ctx = (t_context *) context;
 	while (1)
 	{
+		// printf("pre-start done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
  		pthread_mutex_lock(&ctx->frame_start_mutex);
 		pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 		pthread_mutex_unlock(&ctx->frame_start_mutex);
+		// printf("POST-start done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 		while (1)
 		{
  			pthread_mutex_lock(&ctx->tasks_taken_mutex);
 			if (ctx->tasks_taken >= NUM_TASKS)
 			{
+				// printf("pre-WAIT done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
  				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 				pthread_mutex_lock(&ctx->frame_start_mutex);
 				pthread_cond_wait(&ctx->frame_start_cv, &ctx->frame_start_mutex);
 				pthread_mutex_unlock(&ctx->frame_start_mutex);
-				break ;
+				// printf("POST-WAIT done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 			} else
 			{
+				// printf("pre-taking done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 				task_n = ctx->tasks_taken;
 				ctx->tasks_taken++;
  				pthread_mutex_unlock(&ctx->tasks_taken_mutex);
+				// printf("POST-taking done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 				fractaldraw(ctx,  task_n);
 				pthread_mutex_lock(&ctx->tasks_done_mutex);
+				// printf("POST-DONE done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 				ctx->tasks_done++;
 				if (ctx->tasks_done >= NUM_TASKS)
 				{
+					// printf("pre-broadcast done: %zu taken: %zu\n", ctx->tasks_done, ctx->tasks_taken);
 					pthread_mutex_unlock(&ctx->tasks_done_mutex);
 					pthread_mutex_lock(&ctx->frame_end_mutex);
 					pthread_cond_broadcast(&ctx->frame_end_cv);
@@ -54,6 +62,7 @@ void	taskhandler(void *context)
 		}
 	}
 }
+
 void	fractaldraw(t_context *ctx, int task)
 {
 	int	y;
@@ -98,9 +107,9 @@ void	fractaldraw(t_context *ctx, int task)
 
 
 			img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){
-				125 - sin(0.181/ (color.b + 0.008) + ctx->frame_n /59.0) * 125  /* color * 50 +(1/ (color + 0.004))  */ ,
-				 125 - sin(0.193/ (color.b + 0.008) + ctx->frame_n / 67.0) * 125 /* 255 - (1.0/color+1.0) */,
-				125 + sin(0.563/ (color.b + 0.004) + ctx->frame_n / 73.0) * 125/* 200- color*80 */}));
+				125 - sin(0.181/ (color.b + 0.008) + ctx->frame_n /21.0) * 125  /* color * 50 +(1/ (color + 0.004))  */ ,
+				 125 - sin(0.193/ (color.b + 0.008) + ctx->frame_n / 29.0) * 125 /* 255 - (1.0/color+1.0) */,
+				125 + sin(0.563/ (color.b + 0.004) + ctx->frame_n /31.0) * 125/* 200- color*80 */}));
 			x++;
 		}
 		y += NUM_TASKS * mod;

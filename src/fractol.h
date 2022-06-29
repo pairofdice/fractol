@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 18:33:48 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:10:06 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 
 enum {
-	NUM_THREADS = 9,
-	NUM_TASKS = 29,
+	NUM_THREADS = 1,
+	NUM_TASKS = 1,
 	NUM_FRACTALS = 4,
 	WIN_W = 999,
 	WIN_H = 999,
