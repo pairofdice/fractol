@@ -6,23 +6,23 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:29:50 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/04 20:25:06 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:34:07 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-t_ci julia(t_complex c, t_complex sxy)
+t_ci julia(t_complex c, t_complex s_xy)
 
 {
 	t_ci result;
-	c_mult(sxy, sxy);
-	c_mult(sxy, sxy);
-	result.z = c_add(c_mult(sxy, sxy), c);
-	result.i = sxy.x * sxy.x + sxy.y * sxy.y;
+	c_mult(s_xy, s_xy);
+	c_mult(s_xy, s_xy);
+	result.z = c_add(c_mult(s_xy, s_xy), c);
+	result.i = s_xy.x * s_xy.x + s_xy.y * s_xy.y;
 	return (result);
 }
 
-t_ci	mandelbrot(t_complex sxy, t_complex c)
+t_ci	mandelbrot(t_complex s_xy, t_complex c)
 {
 	t_ci	result;
 	//t_complex	c;
@@ -30,12 +30,12 @@ t_ci	mandelbrot(t_complex sxy, t_complex c)
 	//int			i;
 		//result.z = c_add(c_mult(sxy, sxy), c);
 		//result.i = z.x * z.x + z.y * z.y;
-	result.z = c_add(c_mult(sxy, sxy), c);
+	result.z = c_add(c_mult(s_xy, s_xy), c);
 	result.i = result.z.x * result.z.x + result.z.y * result.z.y;
 
 	return (result);
 } 
-t_ci	my_brot(t_complex sxy, t_complex c)
+t_ci	my_brot(t_complex s_xy, t_complex c)
 {
 	t_ci	result;
 	//t_complex	c;
@@ -43,24 +43,24 @@ t_ci	my_brot(t_complex sxy, t_complex c)
 	//int			i;
 		//result.z = c_add(c_mult(sxy, sxy), c);
 		//result.i = z.x * z.x + z.y * z.y;
-	result.z = c_add(c_mult(sxy, sxy), c);
+	result.z = c_add(c_mult(s_xy, s_xy), c);
 	result.i = result.z.x * result.z.x + result.z.y * result.z.y;
 
 	return (result);
 } 
-t_ci	burning_ship(t_complex sxy, t_complex c)
+t_ci	burning_ship(t_complex s_xy, t_complex c)
 {
 	t_ci	result;
 
-	sxy.x = ft_fabs(sxy.x);
-	sxy.y = ft_fabs(sxy.y);
-	result.z = c_add(c_mult(sxy, sxy), c);
+	s_xy.x = ft_fabs(s_xy.x);
+	s_xy.y = ft_fabs(s_xy.y);
+	result.z = c_add(c_mult(s_xy, s_xy), c);
 	result.i =result.z.x *result.z.x + result.z.y * result.z.y;
 
 	return (result);
 } 
 
-t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx)
+t_colors	fractal_base(t_complex s_xy, t_complex c, t_context *ctx)
 {
 	//t_complex	z;
 	//t_complex	c;
@@ -98,13 +98,13 @@ t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx)
 
 		// ci = ajulia( c, sxy);
 		//ci = ctx->fn_ptrs[ctx->choose_fractal](sxy, c);
-		ci = mandelbrot(sxy, c);
-		sxy = ci.z;
+		ci = mandelbrot(s_xy, c);
+		s_xy = ci.z;
 		i = ci.i;
 
 		
 
-		zMinusPoint = sxy;
+		zMinusPoint = s_xy;
 		point.y =  0;
 		point.x = 0 ;
 		 zMinusPoint = c_sub(zMinusPoint, point);
