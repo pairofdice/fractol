@@ -6,19 +6,20 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 17:26:26 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:00:22 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-	 #include <time.h>
-	 #include <stdio.h>
+	#include	<time.h>
+	#include	<stdio.h>
+
 int	draw_frame(t_context *ctx)
 {
 	clock_t		start_time;
 
-	start_time	= clock();
+	start_time = clock();
 	ctx->frame_n++;
 	pthread_mutex_lock(&ctx->tasks_taken_mutex);
 	ctx->tasks_taken = 0;
@@ -49,10 +50,18 @@ static void	hook_em_up(t_context *ctx)
 	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
 }
 
-int	main(/* int argc, char **argv */)
+int	check_args(int argc, char **argv)
+{
+
+}
+int	main(int argc, char **argv)
 {
 	t_context	ctx;
 
+	if (check_args(argc, argv))
+	{
+			
+		}
 	init_context(&ctx);
 	hook_em_up(&ctx);
 	mlx_loop(ctx.mlx);

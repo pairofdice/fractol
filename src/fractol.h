@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/29 17:31:25 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:00:45 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ enum {
 
 };
 
-
 typedef struct s_complex
 {
 	long double x;
@@ -128,7 +127,6 @@ typedef struct s_context
 	int				max_iter;
 	int				pause;
 	t_complex		screen_xy;
-	//pthread_mutex_t	task_mutex;
 	pthread_mutex_t	tasks_taken_mutex;
 	pthread_mutex_t	tasks_mutex;
 	pthread_mutex_t	tasks_done_mutex;
@@ -144,7 +142,7 @@ typedef struct s_context
 	pthread_t		threadpool[NUM_THREADS];
 	clock_t			prev;
 	clock_t			curr;
-	t_colors		(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c, int max_iter);
+	t_ci		(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c);
 	size_t			choose_fractal;
 }	t_context;
 
@@ -159,10 +157,6 @@ double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
-t_colors		mandelbrot(t_complex sxy, t_complex c, int max_iter);
-t_colors		julia(t_complex sxy, t_complex c, int max_iter);
-t_colors		my_brot(t_complex sxy, t_complex c, int max_iter);
-t_colors		burning_ship(t_complex sxy, t_complex c, int max_iter);
 void	fractaldraw(t_context *ctx, int task);
 
 // handle_it
@@ -178,7 +172,12 @@ int	on_keys_b(int key_nb, t_context *ctx);
 void		zoom_to_mouse(t_context *ctx, double in_out);
 double		ft_fabs(double n);
 void		taskhandler(void *ctx);
-t_colors	fractal_base(t_complex sxy, t_complex c, int max_iter);
+t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx);
+
+t_ci	mandelbrot(t_complex sxy, t_complex c);
+t_ci	julia(t_complex sxy, t_complex c);
+t_ci	my_brot(t_complex sxy, t_complex c);
+t_ci	burning_ship(t_complex sxy, t_complex c);
 
 
 #endif
