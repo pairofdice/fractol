@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/05 16:03:41 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:38:07 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
 
 int			rgb_to_int(t_point c);
-void	fractaldraw(t_context *ctx, int task);
+void	screenloop(t_context *ctx, int task);
 
 // handle_it
 int	on_keypress(int key_nb, t_context *ctx);
@@ -174,11 +174,11 @@ double		ft_fabs(double n);
 void		taskhandler(void *ctx);
 t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx);
 
-t_ci	mandelbrot(t_complex sxy, t_complex c);
-t_ci	julia(t_complex sxy, t_complex c);
-t_ci	julia_inv(t_complex sxy, t_complex c);
-t_ci	my_brot(t_complex sxy, t_complex c);
-t_ci	burning_ship(t_complex sxy, t_complex c);
+t_colors	mandelbrot(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	julia(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	julia_inv(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	burning_ship(t_complex sxy, t_complex c, t_context *ctx);
 
 
 #endif

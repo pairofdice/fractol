@@ -6,7 +6,7 @@
 #    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/06/28 14:29:29 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/07/06 18:37:08 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC = 	$Smain.c \
 		$Shandle_it.c \
 		$Shandle_keys.c \
 		$Szoom.c \
-		$Sutils.c
+		$Sutils.c \
+		$Sscreenloop.c
 
 #H = includes/
 HDR = fractol.h
