@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/04 20:00:45 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/05 16:03:41 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 enum {
 	NUM_THREADS = 13,
 	NUM_TASKS = 29,
-	NUM_FRACTALS = 4,
+	NUM_FRACTALS = 5,
 	WIN_W = 999,
 	WIN_H = 999,
 	ON_KEYDOWN = 2,
@@ -176,6 +176,7 @@ t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx);
 
 t_ci	mandelbrot(t_complex sxy, t_complex c);
 t_ci	julia(t_complex sxy, t_complex c);
+t_ci	julia_inv(t_complex sxy, t_complex c);
 t_ci	my_brot(t_complex sxy, t_complex c);
 t_ci	burning_ship(t_complex sxy, t_complex c);
 

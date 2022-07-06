@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/04 20:25:01 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/06 13:59:33 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	fractaldraw(t_context *ctx, int task)
 	int	y;
 	int	x;
 	double	xc;
+	t_colors color;
 	double	yc;
 	t_complex c;
 	t_complex mouse;
@@ -82,9 +83,21 @@ void	fractaldraw(t_context *ctx, int task)
 				mouse.y = (ctx->mouse_y- WIN_W/2) /666.0;
 			}
 			if (ctx->choose_fractal == 1)
-				t_colors color = fractal_base(mouse, c, ctx);
+			{
+				c.x = 0;
+				c.y = 0;
+				color = fractal_base(c, mouse, ctx);
+			}
+			if (ctx->choose_fractal == 2)
+			{
+				color = fractal_base(c, mouse, ctx);
+			}
 			else
-				t_colors color = fractal_base(mouse, c, ctx);
+			{
+				mouse.x = 0;
+				mouse.y = 0;
+				color = fractal_base(mouse, c, ctx);
+			}
 			img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){
 				125 - sin(0.181/ (color.b + 0.008) + ctx->frame_n /21.0) * 125  /* color * 50 +(1/ (color + 0.004))  */ ,
 				 125 - sin(0.193/ (color.b + 0.008) + ctx->frame_n / 29.0) * 125 /* 255 - (1.0/color+1.0) */,

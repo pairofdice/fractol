@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/04 18:49:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/06 13:57:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	init_pthread(t_context *ctx)
 void	init_fun_pointers(t_context *ctx)
 {
 	ctx->fn_ptrs[0] = mandelbrot;
-	ctx->fn_ptrs[1] = julia;
-	ctx->fn_ptrs[2] = my_brot;
-	ctx->fn_ptrs[3] = burning_ship;
+	ctx->fn_ptrs[1] = mandelbrot;
+	ctx->fn_ptrs[2] = julia_inv;
+	ctx->fn_ptrs[3] = my_brot;
+	ctx->fn_ptrs[4] = burning_ship;
 	ctx->choose_fractal = 0;
 }
 
