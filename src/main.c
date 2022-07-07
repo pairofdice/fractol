@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/06 16:00:11 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:42:43 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,15 @@ int	check_args(int argc, char **argv)
 {
 	return (0);
 }
+
 int	main(int argc, char **argv)
 {
 	t_context	ctx;
 
 	if (check_args(argc, argv))
 	{
-			
-		}
+
+	}
 	init_context(&ctx);
 	hook_em_up(&ctx);
 	mlx_loop(ctx.mlx);

@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:34:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/06 19:20:17 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:43:10 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ void	inner_loop(int x, int y, t_context *ctx)
 
 	xc = (3 * ctx->scale * (float)x / (float)WIN_W) - 2.5 * ctx->scale;
 	yc = (3 * ctx->scale * (float)y / (float)WIN_W) - 1.5 * ctx->scale;
-	c.x = xc + ctx->SOffsetX;
-	c.y = yc + ctx->SOffsetY;
+	c.x = xc + ctx->s_offset_x;
+	c.y = yc + ctx->s_offset_y;
 	if (!ctx->pause)
 	{
 		mouse.x = (ctx->mouse_x - WIN_W / 2) / 666.0;
 		mouse.y = (ctx->mouse_y - WIN_W / 2) / 666.0;
 	}
-	color = julia(mouse, c, ctx);
+	color = mandelbrot(mouse,c, ctx);
+//	color = my_brot_backup(mouse,c, ctx);
+	// color = julia_inv(mouse, c, ctx);
 	img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){
 			125 - sin(0.181 / (color.b + 0.008) + ctx->frame_n / 21.0) * 125,
 			125 - sin(0.193 / (color.b + 0.008) + ctx->frame_n / 29.0) * 125,

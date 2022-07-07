@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/06 18:38:07 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:38:24 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
-
 
 enum {
 	NUM_THREADS = 13,
@@ -66,13 +65,12 @@ enum {
 	KEY_Z = 6,
 	KEY_C = 8,
 	KEY_N = 45
-
 };
 
 typedef struct s_complex
 {
-	long double x;
-	long double y;
+	long double	x;
+	long double	y;
 }	t_complex;
 
 typedef struct s_ci
@@ -83,17 +81,28 @@ typedef struct s_ci
 
 typedef struct s_colors
 {
-	double a;
-	double b;
+	double	a;
+	double	b;
 }	t_colors;
 
- typedef struct s_point
+typedef struct s_fr_dat
+{
+	t_complex	point;
+	t_complex	z;
+	t_complex	z_minus_point;
+	double		zmp_distance;
+	int			n;
+	int			i;
+	double		distance;
+}	t_fr_dat;
+
+typedef struct s_point
 {
 	double	x;
 	double	y;
 	double	z;
 	double	c;
-} t_point;
+}	t_point;
 
 typedef struct s_frame_buffer
 {
@@ -117,8 +126,8 @@ typedef struct s_context
 	int				mouse_y;
 	int				right_mouse_dn;
 	int				left_mouse_dn;
-	double			SOffsetX;
-	double			SOffsetY;
+	double			s_offset_x;
+	double			s_offset_y;
 	double			scale;
 	double			world_w;
 	double			world_h;
@@ -142,43 +151,36 @@ typedef struct s_context
 	pthread_t		threadpool[NUM_THREADS];
 	clock_t			prev;
 	clock_t			curr;
-	t_ci		(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c);
+	t_ci			(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c);
 	size_t			choose_fractal;
 }	t_context;
-
-void	init_context(t_context *ctx);
-
-void	img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
-void	checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
-
+void		init_context(t_context *ctx);
+void		img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
+void		checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 t_complex	c_add(t_complex a, t_complex b);
 t_complex	c_sub(t_complex a, t_complex b);
 double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
-
 int			rgb_to_int(t_point c);
-void	screenloop(t_context *ctx, int task);
-
+void		screenloop(t_context *ctx, int task);
 // handle_it
-int	on_keypress(int key_nb, t_context *ctx);
-int	fdf_close(t_context *vars);
-int	on_mouse_down(int button, int x, int y, t_context *ctx);
-int	on_mouse_move(int x, int y, t_context *ctx);
-int	on_mouse_up(int button, int x, int y, t_context *ctx);
-
-int	on_keys_a(int key_nb, t_context *ctx);
-int	on_keys_b(int key_nb, t_context *ctx);
-
+int			on_keypress(int key_nb, t_context *ctx);
+int			fdf_close(t_context *vars);
+int			on_mouse_down(int button, int x, int y, t_context *ctx);
+int			on_mouse_move(int x, int y, t_context *ctx);
+int			on_mouse_up(int button, int x, int y, t_context *ctx);
+int			on_keys_a(int key_nb, t_context *ctx);
+int			on_keys_b(int key_nb, t_context *ctx);
 void		zoom_to_mouse(t_context *ctx, double in_out);
 double		ft_fabs(double n);
 void		taskhandler(void *ctx);
 t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx);
-
 t_colors	mandelbrot(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	julia(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	julia_inv(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	julia_mess(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	my_brot_backup(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	burning_ship(t_complex sxy, t_complex c, t_context *ctx);
-
 
 #endif

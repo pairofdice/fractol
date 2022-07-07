@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/06 15:59:53 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:56:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	init_context(t_context *ctx)
 			&ctx->fb.bits_per_pixel, &ctx->fb.line_length, &ctx->fb.endian);
 	ctx->win = mlx_new_window(ctx->mlx, WIN_W, WIN_H, "Machine State");
 	ctx->frame_n = 123;
-	ctx->SOffsetX = 0;
-	ctx->SOffsetY = 0;
+	ctx->s_offset_x = 0;
+	ctx->s_offset_y = 0;
 	ctx->scale = 1;
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;

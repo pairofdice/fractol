@@ -6,13 +6,42 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:29:50 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/06 16:37:44 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:13:22 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx)
+{
+	t_fr_dat	d;
+	t_colors	colors;
+
+	d.i = 0;
+	d.n = 0;
+	d.distance = 1e20;
+	while (d.i < 64 && d.n < ctx->max_iter)
+	{
+		d.z = c_mult(d.z, d.z);
+		d.z.x = sin(d.z.x);
+		d.z = c_add(c_mult(d.z, d.z), c);
+		d.z.y = ft_fabs(d.z.y);
+		d.i = d.z.x * d.z.x * d.z.y + d.z.y * d.z.y;
+		d.z_minus_point = d.z;
+		d.point.y = d.z.y * d.z.x;
+		d.point.x = 0;
+		d.z_minus_point = c_sub(d.z_minus_point, d.point);
+		d.zmp_distance = c_abs(d.z_minus_point);
+		if (d.zmp_distance < d.distance)
+			d.distance = d.zmp_distance;
+		d.n++;
+	}
+	colors.a = d.n;
+	colors.b = d.distance;
+	return (colors);
+}
+
+t_colors	my_brot_backup(t_complex sxy, t_complex c, t_context *ctx)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -56,6 +85,32 @@ t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx)
 
 
 t_colors	mandelbrot(t_complex sxy, t_complex c, t_context *ctx)
+{
+	t_fr_dat	d;
+	t_colors	colors;
+
+	d.i = 0;
+	d.n = 0;
+	d.distance = 1e20;
+	while (d.i < 64 && d.n < ctx->max_iter)
+	{
+		d.z = c_add(c_mult(d.z, d.z), c);
+		d.i = d.z.x * d.z.x + d.z.y * d.z.y;
+ 		d.z_minus_point = d.z;
+		d.point.y = d.z.y * d.z.x;
+		d.point.x = 0;
+		d.z_minus_point = c_sub(d.z_minus_point, d.point);
+		d.zmp_distance = c_abs(d.z_minus_point);
+		if (d.zmp_distance < d.distance)
+			d.distance = d.zmp_distance;
+		d.n++;
+	}
+	colors.a = d.n;
+	colors.b = d.distance;
+	return (colors);
+}
+
+t_colors	mandelbrot_backup(t_complex sxy, t_complex c, t_context *ctx)
 {
 	t_complex	z;
 	t_complex	zMinusPoint;
@@ -150,6 +205,12 @@ t_colors	julia(t_complex sxy, t_complex c, t_context *ctx)
 	c.y	= 0.355; */
 
 
+
+	// koita laittaa siihen sun juliaan tää kaava
+	// ((((z^8 / c) + z^11) + c) * z) * c
+	// tai tää ((z^9 + z) + (z^2 * c)^2) / z
+	// tai mandelbrotiin tää  z^3 + c
+
 	i = 0;
 	n = 0;
 	distance = 1e20;
@@ -177,45 +238,30 @@ t_colors	julia(t_complex sxy, t_complex c, t_context *ctx)
 
 t_colors	julia_mess(t_complex sxy, t_complex c, t_context *ctx)
 {
-	t_complex	zMinusPoint;
-	t_complex	point;
-	int	n;
-	int i;
-	double distance;
-	double zMinusPointDistance;
-	t_colors colors;
+	t_fr_dat	d;
+	t_colors	colors;
 
-	i = 0;
-	n = 0;
-	distance = 1e20;
-
-	// koita laittaa siihen sun juliaan tää kaava
-	// ((((z^8 / c) + z^11) + c) * z) * c
-	// tai tää ((z^9 + z) + (z^2 * c)^2) / z
-	// tai mandelbrotiin tää  z^3 + c
-
-	while (i < 64 && n < ctx->max_iter)
+	d.i = 0;
+	d.n = 0;
+	d.distance = 1e20;
+	while (d.i < 64 && d.n < ctx->max_iter)
 	{
-		//ft_putstr("HEI");
-		c_mult(sxy, sxy);
-		c_mult(sxy, sxy);
+		sxy = c_mult(sxy, sxy);
 		sxy = c_add(c_mult(sxy, sxy), c);
-		i = sxy.x * sxy.x + sxy.y * sxy.y;
-
-		zMinusPoint = sxy;
-		point.y = 0;
-		point.x = 0;
-		 zMinusPoint = c_sub(zMinusPoint, point);
-		zMinusPointDistance = c_abs(zMinusPoint);// zMinusPoint.magnitude();
-		if (zMinusPointDistance < distance)
-			distance = zMinusPointDistance;
-		n++;
+		d.i = sxy.x * sxy.x + sxy.y * sxy.y;
+		d.z_minus_point = sxy;
+		d.point.y = 0;
+		d.point.x = 0;
+		d.z_minus_point = c_sub(d.z_minus_point, d.point);
+		d.zmp_distance = c_abs(d.z_minus_point);
+		if (d.zmp_distance < d.distance)
+			d.distance = d.zmp_distance;
+		d.n++;
 	}
-	colors.a = n;
-	colors.b = distance;
+	colors.a = d.n;
+	colors.b = d.distance;
 	return (colors);
 }
-
 
 t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx)
 {

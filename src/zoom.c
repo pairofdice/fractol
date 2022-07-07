@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:57:16 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 16:55:41 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:59:45 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	zoom_to_mouse(t_context *ctx, double in_out)
 		ctx->scale *= in_out;
 		ctx->world_w *= in_out;
 		ctx->world_h *= in_out;
-		ctx->SOffsetX += -0.276 * ctx->scale
+		ctx->s_offset_x += -0.276 * ctx->scale
 			+ mouse_screen_x_fraction * ctx->world_w * 0.1315;
-		ctx->SOffsetY += -0.052 * ctx->scale
+		ctx->s_offset_y += -0.052 * ctx->scale
 			+ mouse_screen_y_fraction * ctx->world_h * 0.1311;
 	}
 	else
@@ -35,9 +35,9 @@ void	zoom_to_mouse(t_context *ctx, double in_out)
 		ctx->scale *= in_out;
 		ctx->world_w *= in_out;
 		ctx->world_h *= in_out;
-		ctx->SOffsetX -= -0.22 * ctx->scale
+		ctx->s_offset_x -= -0.22 * ctx->scale
 			+ mouse_screen_x_fraction * ctx->world_w * 0.105;
-		ctx->SOffsetY -= -0.053 * ctx->scale
+		ctx->s_offset_y -= -0.053 * ctx->scale
 			+ mouse_screen_y_fraction * ctx->world_h * 0.1315;
 	}
 }
