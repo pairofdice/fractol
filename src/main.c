@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/07 12:42:43 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:29:12 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 int	draw_frame(t_context *ctx)
 {
 	clock_t		start_time;
+	printf("choose: %zu \n", ctx->choose_fractal);
 
 	start_time = clock();
 	ctx->frame_n++;

@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/07 14:38:24 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:44:33 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 enum {
 	NUM_THREADS = 13,
 	NUM_TASKS = 29,
-	NUM_FRACTALS = 5,
+	NUM_FRACTALS = 6,
 	WIN_W = 999,
 	WIN_H = 999,
 	ON_KEYDOWN = 2,
@@ -126,6 +126,7 @@ typedef struct s_context
 	int				mouse_y;
 	int				right_mouse_dn;
 	int				left_mouse_dn;
+	double			zoom_xos;
 	double			s_offset_x;
 	double			s_offset_y;
 	double			scale;
@@ -176,9 +177,11 @@ double		ft_fabs(double n);
 void		taskhandler(void *ctx);
 t_colors	fractal_base(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	mandelbrot(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	mandelbrot_backup(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	julia(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	julia_inv(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	julia_mess(t_complex sxy, t_complex c, t_context *ctx);
+t_colors	julia_mess_b(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot_backup(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	burning_ship(t_complex sxy, t_complex c, t_context *ctx);

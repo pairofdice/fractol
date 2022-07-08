@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/07 12:56:02 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:44:49 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_context(t_context *ctx)
 	ctx->frame_n = 123;
 	ctx->s_offset_x = 0;
 	ctx->s_offset_y = 0;
+	ctx->zoom_xos = 0;
 	ctx->scale = 1;
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;
