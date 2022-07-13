@@ -6,18 +6,21 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/08 16:44:33 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:30:57 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# include "../libft/libft.h"
 # include "mlx.h"
 //# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
+# define USAGE "usage: ./fractol <fractal_name>\nAvailable fractals: \
+mandelbrot, mandelmouse, burningship, julia, mandel_tri, julia_quad\n"
 
 enum {
 	NUM_THREADS = 13,
@@ -152,9 +155,9 @@ typedef struct s_context
 	pthread_t		threadpool[NUM_THREADS];
 	clock_t			prev;
 	clock_t			curr;
-	t_ci			(*fn_ptrs[NUM_FRACTALS])(t_complex sxy, t_complex c);
 	size_t			choose_fractal;
 }	t_context;
+
 void		init_context(t_context *ctx);
 void		img_pixel_put(t_frame_buffer *fb, int x, int y, int color);
 void		checked_pixel_put(t_frame_buffer *fb, int x, int y, int color);
@@ -162,6 +165,7 @@ t_complex	c_add(t_complex a, t_complex b);
 t_complex	c_sub(t_complex a, t_complex b);
 double		c_abs(t_complex a);
 t_complex	c_mult(t_complex a, t_complex b);
+t_complex	c_pow(t_complex a, size_t pow);
 int			rgb_to_int(t_point c);
 void		screenloop(t_context *ctx, int task);
 // handle_it
@@ -185,5 +189,8 @@ t_colors	julia_mess_b(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot_backup(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	burning_ship(t_complex sxy, t_complex c, t_context *ctx);
+double		x_offset_selector(t_context *ctx);
+//void		ft_putstr(char const *s);
+void		help_text(t_context *ctx);
 
 #endif

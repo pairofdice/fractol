@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_it.c                                        :+:      :+:    :+:   */
+/*   mouse_events.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 10:59:05 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/07 14:27:15 by jsaarine         ###   ########.fr       */
+/*   Created: 2022/07/13 15:13:58 by jsaarine          #+#    #+#             */
+/*   Updated: 2022/07/13 18:31:51 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
-
-int	on_keypress(int key_nb, t_context *ctx)
-{
-	on_keys_a(key_nb, ctx);
-	on_keys_b(key_nb, ctx);
-	return (0);
-}
-
-int	fdf_close(t_context *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0);
-	return (0);
-}
 
 int	on_mouse_down(int button, int x, int y, t_context *ctx)
 {
-	printf("%d\n", button);
 	if (x >= 0 && x < WIN_W && y - Y_OFFSET >= 0 && y - Y_OFFSET < WIN_H)
 	{
 		if (button == 2)
 			ctx->right_mouse_dn = 1;
 		if (button == 1)
 			ctx->left_mouse_dn = 1;
+		if (button == 4)
+			zoom_to_mouse(ctx, 0.90);
+		if (button == 5)
+			zoom_to_mouse(ctx, 0.90);
 	}
 	return (0);
 }

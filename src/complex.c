@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 16:25:47 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/06/28 14:26:17 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:51:20 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,14 @@ t_complex	c_mult(t_complex a, t_complex b)
 
 	result.x = a.x * b.x - a.y * b.y;
 	result.y = a.x * b.y + a.y * b.x;
+	return (result);
+}
+
+t_complex	c_pow(t_complex a, size_t pow)
+{
+	t_complex	result;
+
+	while (--pow)
+		result = c_mult(a, a);
 	return (result);
 }

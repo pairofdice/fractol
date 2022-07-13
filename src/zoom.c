@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:57:16 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/08 16:49:16 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:33:15 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	zoom_to_mouse(t_context *ctx, double in_out)
 		ctx->scale *= in_out;
 		ctx->world_w *= in_out;
 		ctx->world_h *= in_out;
-						// -0.276
-		ctx->s_offset_x += -0.276 * ctx->scale 		//  0.1315
+		ctx->s_offset_x += -0.276 * ctx->scale
 			+ mouse_screen_x_fraction * ctx->world_w * 0.1315;
-						// -0.052
-		ctx->s_offset_y += -0.052 * ctx->scale		// 0.1311
+		ctx->s_offset_y += -0.052 * ctx->scale
 			+ mouse_screen_y_fraction * ctx->world_h * 0.1311;
 	}
 	else
