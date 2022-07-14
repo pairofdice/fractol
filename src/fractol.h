@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 13:56:52 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:48:19 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ typedef struct s_context
 	void			*mlx;
 	void			*win;
 	t_frame_buffer	fb;
-	int				w;
-	int				h;
 	int				mouse_x;
 	int				mouse_y;
 	int				right_mouse_dn;
@@ -135,28 +133,19 @@ typedef struct s_context
 	double			world_w;
 	double			world_h;
 	int				frame_n;
-	int				n;
 	int				max_iter;
 	int				pause;
-	t_complex		screen_xy;
-	pthread_mutex_t	tasks_taken_mutex;
-	pthread_mutex_t	tasks_mutex;
 	pthread_mutex_t	tasks_done_mutex;
+	pthread_mutex_t	tasks_taken_mutex;
 	pthread_mutex_t	frame_start_mutex;
 	pthread_mutex_t	frame_end_mutex;
 	pthread_cond_t	frame_start_cv;
 	pthread_cond_t	frame_end_cv;
-	pthread_cond_t	tasks_done_cv;
 	size_t			tasks_done;
-	int				task;
 	size_t			tasks_taken;
-	size_t			tasks_doing;
 	pthread_t		threadpool[NUM_THREADS];
-	clock_t			prev;
-	clock_t			curr;
 	size_t			choose_fractal;
 	int				help_text;
-	t_complex		mouse;
 }	t_context;
 
 // complex.c

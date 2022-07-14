@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 13:53:03 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:43:46 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	init_pthread(t_context *ctx)
 	ctx->frame_end_cv = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
 	ctx->tasks_done = 0;
 	ctx->tasks_taken = 0;
-	ctx->tasks_doing = 0;
-	ctx->task = 0;
 }
 
 static void	create_threads(t_context *ctx)
@@ -53,9 +51,8 @@ void	init_context(t_context *ctx)
 	ctx->scale = 1;
 	ctx->left_mouse_dn = 0;
 	ctx->right_mouse_dn = 0;
-	ctx->max_iter = 222;
+	ctx->max_iter = 234;
 	ctx->pause = 0;
-	ctx->n = 0;
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float) WIN_H / (float) WIN_W;
 	ctx->help_text = 1;
