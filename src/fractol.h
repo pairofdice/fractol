@@ -6,19 +6,20 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 18:30:57 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:00:30 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "../libft/libft.h"
+// # include "../libft/libft.h"
 # include "mlx.h"
 //# include "../minilibx/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <unistd.h>
 # define USAGE "usage: ./fractol <fractal_name>\nAvailable fractals: \
 mandelbrot, mandelmouse, burningship, julia, mandel_tri, julia_quad\n"
 
@@ -67,7 +68,8 @@ enum {
 	KEY_P = 35,
 	KEY_Z = 6,
 	KEY_C = 8,
-	KEY_N = 45
+	KEY_N = 45,
+	KEY_L = 4
 };
 
 typedef struct s_complex
@@ -104,7 +106,6 @@ typedef struct s_point
 	double	x;
 	double	y;
 	double	z;
-	double	c;
 }	t_point;
 
 typedef struct s_frame_buffer
@@ -156,6 +157,7 @@ typedef struct s_context
 	clock_t			prev;
 	clock_t			curr;
 	size_t			choose_fractal;
+	int				help_text;
 }	t_context;
 
 void		init_context(t_context *ctx);
@@ -190,7 +192,8 @@ t_colors	my_brot(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	my_brot_backup(t_complex sxy, t_complex c, t_context *ctx);
 t_colors	burning_ship(t_complex sxy, t_complex c, t_context *ctx);
 double		x_offset_selector(t_context *ctx);
-//void		ft_putstr(char const *s);
+void		ft_putstr(char const *s);
 void		help_text(t_context *ctx);
+int			ft_strcmp(const char *a, const char *b);
 
 #endif

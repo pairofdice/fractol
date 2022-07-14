@@ -6,11 +6,12 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 15:19:10 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:49:47 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <stdio.h>
 
 void	fractal_reset(t_context *ctx)
 {
@@ -59,11 +60,14 @@ int	on_keys_a(int key_nb, t_context *ctx)
 		ctx->max_iter += 1;
 	if (key_nb == KEY_MB_G || key_nb == KEY_G)
 		ctx->max_iter -= 1;
+	if (key_nb == KEY_L)
+		ctx->help_text *= -1;
 	return (0);
 }
 
 int	on_keypress(int key_nb, t_context *ctx)
 {
+	printf("%d\n", key_nb);
 	on_keys_a(key_nb, ctx);
 	on_keys_b(key_nb, ctx);
 	return (0);

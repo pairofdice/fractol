@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:34:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 18:32:36 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:09:25 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ void	inner_loop(int x, int y, t_context *ctx)
 	yc = (3 * ctx->scale * (float)y / (float)WIN_W) - 1.5 * ctx->scale;
 	c.x = xc + ctx->s_offset_x;
 	c.y = yc + ctx->s_offset_y;
+	mouse.x = 0;
+	mouse.y = 0;
 	if (!ctx->pause)
 	{
 		mouse.x = (ctx->mouse_x - WIN_W / 2) / 666.0;
 		mouse.y = (ctx->mouse_y - WIN_W / 2) / 666.0;
 	}
+	color = (t_colors){0.0, 0.0};
 	color = choose_fractal(mouse, c, color, ctx);
 	img_pixel_put(&ctx->fb, x, y, rgb_to_int((t_point){
 			125 - sin(0.181 / (color.b + 0.008) + ctx->frame_n / 21.0) * 125,

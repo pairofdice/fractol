@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 18:31:15 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:49:23 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	draw_frame(t_context *ctx)
 	pthread_cond_wait(&ctx->frame_end_cv, &ctx->frame_end_mutex);
 	pthread_mutex_unlock(&ctx->frame_end_mutex);
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->fb.img, 0, 0);
-	help_text(ctx);
+	if (ctx->help_text == 1)
+		help_text(ctx);
 	return (1);
 }
 

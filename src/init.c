@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 18:29:15 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:59:50 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	create_threads(t_context *ctx)
 
 void	init_context(t_context *ctx)
 {
-	int	i;
-
 	ctx->mlx = mlx_init();
 	ctx->fb.img = mlx_new_image(ctx->mlx, WIN_W, WIN_H);
 	ctx->fb.data = mlx_get_data_addr(ctx->fb.img,
@@ -60,6 +58,7 @@ void	init_context(t_context *ctx)
 	ctx->n = 0;
 	ctx->world_w = 2.5;
 	ctx->world_h = ctx->world_w * (float) WIN_H / (float) WIN_W;
+	ctx->help_text = 1;
 	init_pthread(ctx);
 	create_threads(ctx);
 }
