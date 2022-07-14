@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 18:21:06 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:58:56 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	on_keys_b(int key_nb, t_context *ctx)
 static int	on_keys_a(int key_nb, t_context *ctx)
 {
 	if (key_nb == KEY_MB_ESC || key_nb == KEY_ESC)
-		fdf_close(ctx);
+		fractol_close(ctx);
 	if (key_nb == KEY_MB_R || key_nb == KEY_R)
 		zoom_to_mouse(ctx, 0.90);
 	if (key_nb == KEY_MB_F || key_nb == KEY_F)

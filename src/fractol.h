@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 18:18:07 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:58:29 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,8 @@ void		screenloop(t_context *ctx, int task);
 // utils.c
 double		ft_fabs(double n);
 void		help_text(t_context *ctx);
-int			fdf_close(t_context *vars);
+int			fractol_close(t_context *vars);
 int			ft_strcmp(const char *a, const char *b);
-void		ft_putstr(char const *s);
 // zoom.c
 void		zoom_to_mouse(t_context *ctx, double in_out);
 

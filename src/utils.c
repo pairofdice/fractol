@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:06:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 18:11:37 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:58:56 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	help_text(t_context *ctx)
 	}
 }
 
-int	fdf_close(t_context *vars)
+int	fractol_close(t_context *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
