@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:15:52 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 14:48:19 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:18:07 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ enum {
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
-	ON_DESTROY = 33,
-	Y_OFFSET = 32102,
+	ON_DESTROY = 17,
+	Y_OFFSET = 0,
 	KEY_MB_ESC = 65307,
 	KEY_MB_W = 119,
 	KEY_MB_A = 97,
@@ -67,7 +67,11 @@ enum {
 	KEY_Z = 6,
 	KEY_C = 8,
 	KEY_N = 45,
-	KEY_L = 4
+	KEY_L = 4,
+	KEY_LA = 123,
+	KEY_DA = 125,
+	KEY_RA = 124,
+	KEY_UA = 126
 };
 
 typedef struct s_complex

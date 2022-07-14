@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 18:48:43 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 14:18:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:21:06 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	fractal_reset(t_context *ctx)
 
 static int	on_keys_b(int key_nb, t_context *ctx)
 {
-	if (key_nb == KEY_MB_S || key_nb == KEY_S)
+	if (key_nb == KEY_MB_S || key_nb == KEY_S || key_nb == KEY_UA)
 		ctx->s_offset_y += 0.1 * ctx->scale;
-	if (key_nb == KEY_MB_A || key_nb == KEY_A)
+	if (key_nb == KEY_MB_A || key_nb == KEY_A || key_nb == KEY_RA)
 		ctx->s_offset_x -= 0.1 * ctx->scale;
-	if (key_nb == KEY_MB_W || key_nb == KEY_W)
+	if (key_nb == KEY_MB_W || key_nb == KEY_W || key_nb == KEY_DA)
 		ctx->s_offset_y -= 0.1 * ctx->scale;
-	if (key_nb == KEY_MB_D || key_nb == KEY_D)
+	if (key_nb == KEY_MB_D || key_nb == KEY_D || key_nb == KEY_LA)
 		ctx->s_offset_x += 0.1 * ctx->scale;
 	if (key_nb == KEY_MB_B || key_nb == KEY_B)
 		fractal_reset(ctx);

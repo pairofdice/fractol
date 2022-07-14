@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:06:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 13:52:58 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:11:37 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,4 @@ int	ft_strcmp(const char *a, const char *b)
 		b++;
 	}
 	return (((unsigned char)*a) - ((unsigned char)*b));
-}
-
-void	ft_putstr(char const *s)
-{
-	int	len;
-
-	len = 0;
-	if (!s)
-		return ;
-	while (s[len] != '\0')
-		len++;
-	write(1, s, len);
 }

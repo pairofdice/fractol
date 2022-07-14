@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:13:58 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 14:13:52 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:32:24 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ int	on_mouse_move(int x, int y, t_context *ctx)
 
 int	on_mouse_up(int button, int x, int y, t_context *ctx)
 {
-	if (x || y)
-	{
-	}
+	(void)x;
+	(void)y;
 	if (button == 2)
 		ctx->right_mouse_dn = 0;
 	if (button == 1)

@@ -6,7 +6,7 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:34:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 14:13:08 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:03:29 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_colors	choose_fractal(t_complex mouse, t_complex c, t_colors color,
 	return (color);
 }
 
-static void	inner_loop(int x, int y, t_context *ctx)
+static void	draw(int x, int y, t_context *ctx)
 {
 	static t_complex	mouse;
 	double				xc;
@@ -70,7 +70,7 @@ void	screenloop(t_context *ctx, int task)
 		x = 0;
 		while (x < WIN_W)
 		{
-			inner_loop(x, y, ctx);
+			draw(x, y, ctx);
 			x++;
 		}
 		y += NUM_TASKS;
