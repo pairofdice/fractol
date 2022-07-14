@@ -58,3 +58,4 @@ notes
 tags
 *.swp
 fractals_fkt.c
+.gitignore

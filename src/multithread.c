@@ -6,13 +6,13 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:51:44 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 16:30:14 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:53:01 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	worker_wait(t_context *ctx)
+static void	worker_wait(t_context *ctx)
 {
 	pthread_mutex_unlock(&ctx->tasks_taken_mutex);
 	pthread_mutex_lock(&ctx->frame_start_mutex);
@@ -20,7 +20,7 @@ void	worker_wait(t_context *ctx)
 	pthread_mutex_unlock(&ctx->frame_start_mutex);
 }
 
-void	worker_task(int *task_n, t_context *ctx)
+static void	worker_task(int *task_n, t_context *ctx)
 {
 	*task_n = ctx->tasks_taken;
 	ctx->tasks_taken++;
@@ -30,7 +30,7 @@ void	worker_task(int *task_n, t_context *ctx)
 	ctx->tasks_done++;
 }
 
-void	worker_broadcast(t_context *ctx)
+static void	worker_broadcast(t_context *ctx)
 {
 	pthread_mutex_unlock(&ctx->tasks_done_mutex);
 	pthread_mutex_lock(&ctx->frame_end_mutex);

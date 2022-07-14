@@ -6,13 +6,13 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:51 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 12:59:50 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:53:03 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_pthread(t_context *ctx)
+static void	init_pthread(t_context *ctx)
 {
 	ctx->tasks_done_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	ctx->tasks_taken_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
@@ -26,7 +26,7 @@ void	init_pthread(t_context *ctx)
 	ctx->task = 0;
 }
 
-void	create_threads(t_context *ctx)
+static void	create_threads(t_context *ctx)
 {
 	int	i;
 
@@ -62,7 +62,6 @@ void	init_context(t_context *ctx)
 	init_pthread(ctx);
 	create_threads(ctx);
 }
-	//init_fun_pointers(ctx);
 
 double	x_offset_selector(t_context *ctx)
 {

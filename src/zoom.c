@@ -6,12 +6,11 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:57:16 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/13 18:33:15 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:52:57 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
 
 void	zoom_to_mouse(t_context *ctx, double in_out)
 {

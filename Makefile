@@ -6,7 +6,7 @@
 #    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:46:07 by jsaarine          #+#    #+#              #
-#    Updated: 2022/07/14 13:16:39 by jsaarine         ###   ########.fr        #
+#    Updated: 2022/07/14 13:57:50 by jsaarine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ OBJ = $(SRC:%.c=%.o)
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 RM = /bin/rm -f
 
 all: $(NAME)

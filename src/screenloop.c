@@ -6,14 +6,13 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:34:17 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 13:09:25 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:13:08 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h" 
-#include <stdio.h>
+#include "fractol.h"
 
-t_colors	choose_fractal(t_complex mouse, t_complex c, t_colors color,
+static t_colors	choose_fractal(t_complex mouse, t_complex c, t_colors color,
 				t_context *ctx)
 {
 	if (ctx->choose_fractal == 0)
@@ -31,21 +30,19 @@ t_colors	choose_fractal(t_complex mouse, t_complex c, t_colors color,
 	return (color);
 }
 
-void	inner_loop(int x, int y, t_context *ctx)
+static void	inner_loop(int x, int y, t_context *ctx)
 {
-	double		xc;
-	double		yc;
-	t_colors	color;
-	t_complex	c;
-	t_complex	mouse;
+	static t_complex	mouse;
+	double				xc;
+	double				yc;
+	t_colors			color;
+	t_complex			c;
 
 	xc = (3 * ctx->scale * (float)x / (float)WIN_W) - 2.5 * ctx->scale;
 		ctx->zoom_xos = 0;
 	yc = (3 * ctx->scale * (float)y / (float)WIN_W) - 1.5 * ctx->scale;
 	c.x = xc + ctx->s_offset_x;
 	c.y = yc + ctx->s_offset_y;
-	mouse.x = 0;
-	mouse.y = 0;
 	if (!ctx->pause)
 	{
 		mouse.x = (ctx->mouse_x - WIN_W / 2) / 666.0;

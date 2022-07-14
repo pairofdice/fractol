@@ -6,13 +6,13 @@
 /*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:09:41 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/07/14 12:49:23 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:53:02 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	draw_frame(t_context *ctx)
+static int	draw_frame(t_context *ctx)
 {
 	ctx->frame_n++;
 	pthread_mutex_lock(&ctx->tasks_taken_mutex);
@@ -43,7 +43,7 @@ static void	hook_em_up(t_context *ctx)
 	mlx_loop_hook(ctx->mlx, draw_frame, ctx);
 }
 
-void	check_args(char *arg, t_context *ctx)
+static void	check_args(char *arg, t_context *ctx)
 {
 	if (!ft_strcmp(arg, "mandelbrot"))
 		ctx->choose_fractal = 0;
