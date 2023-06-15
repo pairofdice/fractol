@@ -1,5 +1,5 @@
 # fractol
-Multithreaded fractal explorer with a small selection of different fractals. Zoom to mouse, pan, lock (for julia and a version of mandelbrot) and crazy colors. I wrote this in C from scratch using only the necessary library functions to open and draw to a window.
+Multithreaded fractal explorer with a small selection of different fractals. Zoom to mouse, pan, lock (for julia and a version of mandelbrot) and crazy colors. I wrote this in C from scratch using only the necessary library functions to open and draw to a window. I learned a lot about multithreading, conditional variables and mutexes through this project.
 
 https://github.com/pairofdice/fractol/assets/1247587/26067a53-fba3-4902-be89-9d1b31f44aec
 
